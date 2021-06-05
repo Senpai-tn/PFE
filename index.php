@@ -14,7 +14,7 @@ include_once 'Base.php'; ?>
     $u = unserialize($_SESSION['user']);
 
     if (in_array('admin', $u->roles)) {
-        echo 'admin';
+        header("location:admin.php");
     } else {
         echo 'user';
     }

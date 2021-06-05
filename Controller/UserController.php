@@ -6,6 +6,10 @@ if (isset($_POST['fn'])) {
     $_POST['fn']();
 }
 
+if (isset($_GET['fn'])) {
+    $_GET['fn']();
+}
+
 function Login()
 {
     $c = new ConnectionController();
@@ -76,6 +80,13 @@ function Register()
     }
 
     $conn->close();
+}
+
+function Logout()
+{
+
+    $_SESSION['user'] = null;   
+    header('location:../login.php');
 }
 
 ?>
