@@ -84,8 +84,7 @@ function Register()
 
 function Logout()
 {
-
-    $_SESSION['user'] = null;   
+    $_SESSION['user'] = null;
     header('location:../login.php');
 }
 
