@@ -938,15 +938,13 @@ html body .waves-notransition {
 }
 .btn-success,
 .btn-success.disabled {
-  background: #26c6da;
-  border: 1px solid #26c6da;
+  background-color: #28a745;
   box-shadow: 0 2px 2px 0 rgba(40, 190, 189, 0.14),
     0 3px 1px -2px rgba(40, 190, 189, 0.2), 0 1px 5px 0 rgba(40, 190, 189, 0.12);
   transition: 0.2s ease-in;
 }
 .btn-success.disabled:hover,
 .btn-success:hover {
-  background: #26c6da;
   box-shadow: 0 14px 26px -12px rgba(40, 190, 189, 0.42),
     0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(40, 190, 189, 0.2);
   border: 1px solid #26c6da;
@@ -957,7 +955,6 @@ html body .waves-notransition {
 .btn-success.disabled:focus,
 .btn-success:active,
 .btn-success:focus {
-  background: #1eacbe;
   box-shadow: 0 14px 26px -12px rgba(40, 190, 189, 0.42),
     0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(40, 190, 189, 0.2);
 }
@@ -1136,7 +1133,6 @@ html body .waves-notransition {
 .btn-outline-success.focus,
 .btn-outline-success:focus,
 .btn-outline-success:hover {
-  background: #26c6da;
   border-color: #26c6da;
   color: #ffffff;
   box-shadow: 0 14px 26px -12px rgba(40, 190, 189, 0.42),
@@ -1279,7 +1275,6 @@ html body .waves-notransition {
 .open > .dropdown-toggle.btn-success.focus,
 .open > .dropdown-toggle.btn-success:focus,
 .open > .dropdown-toggle.btn-success:hover {
-  background-color: #1eacbe;
   border: 1px solid #1eacbe;
 }
 .btn-info.active.focus,
@@ -1550,7 +1545,7 @@ ul.list-style-none li a:hover {
   color: #747d8a;
 }
 .custom-select {
-  background: url(../../img/custom-select.png) right 0.75rem center no-repeat;
+  background: url(assets/img/custom-select.png) right 0.75rem center no-repeat;
 }
 textarea {
   resize: none;

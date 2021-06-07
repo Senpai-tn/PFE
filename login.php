@@ -13,7 +13,6 @@ if (isset($_SESSION['user'])) {
   <title>Document</title>
   <link rel="stylesheet" href="assets/css/login.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:600">
-  <link rel="stylesheet" href="assets/css/login.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
 <body>

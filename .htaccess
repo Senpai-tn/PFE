@@ -1,0 +1,2 @@
+ErrorDocument 404 /PFE/404.html
+ErrorDocument 403 /PFE/403.html

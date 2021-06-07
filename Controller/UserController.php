@@ -1,6 +1,6 @@
 <?php
-include '../Model/User.php';
-include 'ConnectionController.php';
+include_once '../Model/User.php';
+include_once 'ConnectionController.php';
 session_start();
 if (isset($_POST['fn'])) {
     $_POST['fn']();
@@ -53,16 +53,15 @@ function Login()
 function Register()
 {
     $c = new ConnectionController();
+    $conn = $c->Connect();
     $d = date('Y-m-d H:i:s');
     $username = $_POST['user-sign-up'];
     $login = $_POST['login-sign-up'];
     $email = $_POST['email-sign-up'];
     $tel = $_POST['tel-sign-up'];
     $password = md5($_POST['pass-sign-up']);
-    $conn = $c->Connect();
     $roles = ['user'];
     $role = implode(',', $roles);
-
     $sql = "INSERT INTO users (username	,login,email,tel,password,created_at,roles) VALUES ('$username','$login','$email','$tel','$password','$d','$role')";
 
     if ($conn->query($sql) === true) {
@@ -86,6 +85,43 @@ function Logout()
 {
     $_SESSION['user'] = null;
     header('location:../login.php');
+}
+
+function FetchAll()
+{
+    $all = [];
+    $c = new ConnectionController();
+    $conn = $c->Connect();
+    $sql = 'SELECT * FROM users ';
+    $result = $conn->query($sql);
+    while ($row = $result->fetch_assoc()) {
+        array_push($all, $row);
+    }
+    echo json_encode($all);
+}
+
+function ChangeRole()
+{
+    $c = new ConnectionController();
+    $id = $_POST['id'];
+    $new_role = $_POST['role'];
+    $conn = $c->Connect();
+    $sql = "UPDATE users SET roles='$new_role' WHERE id=$id";
+    $conn->query($sql);
+    header('location:/pfe/listusers.php');
+    $conn->close();
+}
+
+function ChangeEnabled()
+{
+    $c = new ConnectionController();
+    $id = $_POST['id'];
+    $isEnabled = $_POST['isEnabled'];
+    $conn = $c->Connect();
+    $sql = "UPDATE users SET isEnabled=$isEnabled WHERE id=$id";
+    $conn->query($sql);
+    header('location:/pfe/listusers.php');
+    $conn->close();
 }
 
 ?>

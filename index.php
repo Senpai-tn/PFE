@@ -1,5 +1,10 @@
 <?php
-include_once 'Base.php'; ?>
+session_start();
+if (!isset($_SESSION['user'])) {
+    header('location:login.php');
+    return false;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +12,7 @@ include_once 'Base.php'; ?>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 </head>
 <body>
     <?php
@@ -24,4 +30,5 @@ include_once 'Base.php'; ?>
 
     
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </html>
