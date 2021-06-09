@@ -3,6 +3,8 @@
 include_once 'AdminViews/Header.php';
 include_once 'Controller/ConnectionController.php';
 ?>
+
+
 <style>
     .btn-success{
         background-color: #28a745;
@@ -21,24 +23,22 @@ include_once 'Controller/ConnectionController.php';
                                     <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
+                                                <th>Ref</th>
+                                                <th>Type</th>
+                                                <th>created at</th>
                                                 <th>Station</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
+                                                
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tfoot>
                                             <tr>
-                                                <th>Name</th>
-                                                <th>Position</th>
-                                                <th>Office</th>
-                                                <th>Age</th>
+                                                <th>Ref</th>
+                                                <th>Type</th>
+                                                <th>created at</th>
                                                 <th>Station</th>
-                                                <th>Start date</th>
-                                                <th>Salary</th>
+                                                
+                                                <th>Action</th>
                                             </tr>
                                         </tfoot>
                                         <tbody id="table">
@@ -56,8 +56,10 @@ include_once 'Controller/ConnectionController.php';
                                                  <td>' .
                                                 $row['type'] .
                                                 '</td>
-                                                 <td></td>
-                                                 <td ></td>
+                                                 <td>' .
+                                                $row['created_at'] .
+                                                '</td>
+                                                 
                                                 <td >';
                                             if ($row['idStation'] != null) {
                                                 $s =
@@ -70,10 +72,10 @@ include_once 'Controller/ConnectionController.php';
                                                 echo '';
                                             }
                                             echo '</td>
-                                                 <td></td>
+                                                 
                                                  <td> 
                                             
-                                            <form action="Controller/UserController.php" method="POST">
+                                            <form action="Controller/SensorController.php" method="POST">
                                             <input type="hidden" name="ref" value=' .
                                                 $row['ref'] .
                                                 '
@@ -109,4 +111,7 @@ include_once 'Controller/ConnectionController.php';
                 </div>
                 </div>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                <script>
+                    document.title = "Sensors";
+                </script>
 <?php include 'AdminViews/Footer.php'; ?>

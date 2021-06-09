@@ -18,9 +18,38 @@ function AddSensor()
     $ref = $_POST['ref'];
     $type = $_POST['type'];
     $sql = "INSERT INTO sensors (ref	,type,created_at) VALUES ('$ref','$type','$d')";
+    if ($conn->query($sql) === true) {
+        header('location:/pfe/listsensors.php');
+        return false;
+    } else {
+        $_SESSION['error'] = 'Reference already exist';
+        header('location:/pfe/Addsensor.php');
+        return false;
+    }
+}
+
+function AssingnSensor()
+{
+    $c = new ConnectionController();
+    $ref = $_POST['ref'];
+    $idStation = $_POST['idStation'];
+    $conn = $c->Connect();
+    $sql = "UPDATE sensors SET idStation=$idStation WHERE ref='$ref'";
     $conn->query($sql);
-    $conn->close();
     header('location:/pfe/listsensors.php');
+    $conn->close();
+}
+
+function ChangeEnabled()
+{
+    $c = new ConnectionController();
+    $ref = $_POST['ref'];
+    $isEnabled = $_POST['isEnabled'];
+    $conn = $c->Connect();
+    $sql = "UPDATE sensors SET isEnabled=$isEnabled WHERE ref='$ref'";
+    $conn->query($sql);
+    header('location:/pfe/listsensors.php');
+    $conn->close();
 }
 
 ?>

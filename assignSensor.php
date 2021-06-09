@@ -36,18 +36,18 @@ datalist {
   <div class="container-fluid">
     <div class="login-form">
       <div class="container">
-      <form action="Controller/UserController.php" method="POST">
+      <form action="Controller/SensorController.php" method="POST">
   
   <div class="form-group">
-    <label for="exampleFormControlSelect1">User </label>
-    <label for="browsersUsers">( Choose your browser from the list ) :</label>
-  <input list="browsersUsers" class="form-control" id="exampleFormControlSelect1" name="id">
-  <datalist id="browsersUsers">
+    <label for="exampleFormControlSelect1">Sensors </label>
+    <label for="browsersSensors">( Choose your browser from the list ) :</label>
+  <input list="browsersSensors" class="form-control" id="exampleFormControlSelect1" name="ref">
+  <datalist id="browsersSensors">
   <?php
-  $sql = 'SELECT * FROM users';
+  $sql = 'SELECT * FROM sensors';
   $result = $conn->query($sql);
   while ($row = $result->fetch_assoc()) {
-      echo '<option value=' . $row['id'] . '>' . $row['username'] . '</option>';
+      echo '<option value=' . $row['ref'] . '>' . $row['type'] . '</option>';
   }
   ?>
   </datalist>
@@ -67,7 +67,7 @@ datalist {
   ?>
   </datalist>
   </div>
-  <input type="hidden" name="fn" value="AssingnUser">
+  <input type="hidden" name="fn" value="AssingnSensor">
   <input type="submit" value="Assign">
 </form>
       </div>

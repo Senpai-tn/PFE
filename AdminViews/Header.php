@@ -24,7 +24,7 @@ if (!in_array('admin', $u->roles)) {
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon.png">
-    <title>Admin Press Admin Template - The Ultimate Bootstrap 4 Admin Template</title>
+    <title></title>
     <!-- Bootstrap Core CSS -->
     <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- morris CSS -->
@@ -393,6 +393,8 @@ if (!in_array('admin', $u->roles)) {
     margin-left: -15px;" src="assets/img/sensor.png"><span class="hide-menu">Sensors<span class="label label-rouded label-info pull-right"></span></span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="AddSensor.php">Add sensor</a></li>
+                                <li><a href="ListSensors.php">List of sensor</a></li>
+                                <li><a href="AssignSensor.php">Assign sensor</a></li>
                             </ul>
                         </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-table"></i><span class="hide-menu">Tables</span></a>

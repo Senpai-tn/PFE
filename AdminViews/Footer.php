@@ -50,6 +50,11 @@
     <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
     <!-- end - This is for export functionality only -->
     <script>
+setTimeout(() => {
+    <?php $_SESSION['error'] = null; ?>
+}, 100);
+</script>
+    <script>
     $(document).ready(function() {
         $('#myTable').DataTable();
         $(document).ready(function() {

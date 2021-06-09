@@ -96,4 +96,7 @@ include_once 'Controller/ConnectionController.php';
                 </div>
                 </div>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                <script>
+                    document.title = "Stations";
+                </script>
 <?php include 'AdminViews/Footer.php'; ?>

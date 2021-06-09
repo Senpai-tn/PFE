@@ -53,4 +53,7 @@
     </div>
 </div>
 <script src="assets/js/Validate.js"></script>
+<script>
+                    document.title = "Add station";
+                </script>
 <?php include 'AdminViews/Footer.php'; ?>

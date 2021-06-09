@@ -162,5 +162,8 @@
             <!-- End footer -->
             <!-- ============================================================== -->
         </div>
+        <script>
+                    document.title = "Dashboard";
+                </script>
 <?php include 'AdminViews/Footer.php'; ?>
        

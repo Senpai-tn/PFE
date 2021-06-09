@@ -64,4 +64,7 @@
     </div>
 </div>
 <script src="assets/js/Validate.js"></script>
+<script>
+                    document.title = "Add user";
+                </script>
 <?php include 'AdminViews/Footer.php'; ?>
