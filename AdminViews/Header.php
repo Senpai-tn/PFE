@@ -11,11 +11,6 @@ if (!isset($_SESSION['user'])) {
 if (!in_array('admin', $u->roles)) {
     header('location:403.html');
 }
-
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,6 +34,9 @@ if (!in_array('admin', $u->roles)) {
     <!-- You can change the theme colors from here -->
     <link href="assets/AdminAssets/css/colors/blue-dark.css" id="theme" rel="stylesheet">
     <link href="assets/font-awesome/css/font-awesome.css"  rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -352,10 +350,7 @@ if (!in_array('admin', $u->roles)) {
                     </div>
                     <!-- User profile text-->
                     <div class="profile-text">
-                        <h5><?php
-
-                        echo $u->username;
-                        ?></h5>
+                        <h5><?php echo $u->username; ?></h5>
                         <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
                         <a href="app-email.html" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
                         <a href="Controller/UserController.php?fn=Logout" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
@@ -377,66 +372,27 @@ if (!in_array('admin', $u->roles)) {
                         <li class="nav-devider"></li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
                         <i class="fa fa-users" aria-hidden="true"></i><span class="hide-menu">
-                                Users <span class="label label-rouded label-themecolor pull-right">4</span></span></a>
+                                Users <span class="label label-rouded label-themecolor pull-right"></span></span></a>
                             <ul aria-expanded="false" class="collapse">
+                                <li><a href="adduser.php">Add new user </a></li>
                                 <li><a href="listusers.php">List of users </a></li>
-                                <li><a href="index2.html">Analytical</a></li>
-                                <li><a href="index3.html">Demographical</a></li>
-                                <li><a href="index4.html">Modern</a></li>
+                                <li><a href="AssignUser.php">Assign user to station</a></li>
+
                             </ul>
                         </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="fa fa-building-o" aria-hidden="true"></i><span class="hide-menu">Stations <span class="label label-rouded label-danger pull-right">25</span></span></a>
+                        <i class="fa fa-building-o" aria-hidden="true"></i><span class="hide-menu">Stations <span class="label label-rouded label-primary pull-right"></span></span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="ui-cards.html">Cards</a></li>
-                                <li><a href="ui-user-card.html">User Cards</a></li>
-                                <li><a href="ui-buttons.html">Buttons</a></li>
-                                <li><a href="ui-modals.html">Modals</a></li>
-                                <li><a href="ui-tab.html">Tab</a></li>
-                                <li><a href="ui-tooltip-popover.html">Tooltip &amp; Popover</a></li>
-                                <li><a href="ui-tooltip-stylish.html">Tooltip stylish</a></li>
-                                <li><a href="ui-sweetalert.html">Sweet Alert</a></li>
-                                <li><a href="ui-notification.html">Notification</a></li>
-                                <li><a href="ui-progressbar.html">Progressbar</a></li>
-                                <li><a href="ui-nestable.html">Nestable</a></li>
-                                <li><a href="ui-range-slider.html">Range slider</a></li>
-                                <li><a href="ui-timeline.html">Timeline</a></li>
-                                <li><a href="ui-typography.html">Typography</a></li>
-                                <li><a href="ui-horizontal-timeline.html">Horizontal Timeline</a></li>
-                                <li><a href="ui-session-timeout.html">Session Timeout</a></li>
-                                <li><a href="ui-session-ideal-timeout.html">Session Ideal Timeout</a></li>
-                                <li><a href="ui-bootstrap.html">Bootstrap Ui</a></li>
-                                <li><a href="ui-breadcrumb.html">Breadcrumb</a></li>
-                                <li><a href="ui-bootstrap-switch.html">Bootstrap Switch</a></li>
-                                <li><a href="ui-list-media.html">List Media</a></li>
-                                <li><a href="ui-ribbons.html">Ribbons</a></li>
-                                <li><a href="ui-grid.html">Grid</a></li>
-                                <li><a href="ui-carousel.html">Carousel</a></li>
-                                <li><a href="ui-date-paginator.html">Date-paginator</a></li>
-                                <li><a href="ui-dragable-portlet.html">Dragable Portlet</a></li>
+                                <li><a href="AddStation.php">Add new station </a></li>
+                                <li><a href="liststations.php">List of stations </a></li>
+                                
                             </ul>
                         </li>
-                        <li class="nav-small-cap">FORMS, TABLE &amp; WIDGETS</li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-file"></i><span class="hide-menu">Forms</span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img style="height: 51px;
+    width: auto;
+    margin-left: -15px;" src="assets/img/sensor.png"><span class="hide-menu">Sensors<span class="label label-rouded label-info pull-right"></span></span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="form-basic.html">Basic Forms</a></li>
-                                <li><a href="form-layout.html">Form Layouts</a></li>
-                                <li><a href="form-addons.html">Form Addons</a></li>
-                                <li><a href="form-material.html">Form Material</a></li>
-                                <li><a href="form-float-input.html">Floating Lable</a></li>
-                                <li><a href="form-pickers.html">Form Pickers</a></li>
-                                <li><a href="form-upload.html">File Upload</a></li>
-                                <li><a href="form-mask.html">Form Mask</a></li>
-                                <li><a href="form-validation.html">Form Validation</a></li>
-                                <li><a href="form-dropzone.html">File Dropzone</a></li>
-                                <li><a href="form-icheck.html">Icheck control</a></li>
-                                <li><a href="form-img-cropper.html">Image Cropper</a></li>
-                                <li><a href="form-bootstrapwysihtml5.html">HTML5 Editor</a></li>
-                                <li><a href="form-typehead.html">Form Typehead</a></li>
-                                <li><a href="form-wizard.html">Form Wizard</a></li>
-                                <li><a href="form-xeditable.html">Xeditable Editor</a></li>
-                                <li><a href="form-summernote.html">Summernote Editor</a></li>
-                                <li><a href="form-tinymce.html">Tinymce Editor</a></li>
+                                <li><a href="AddSensor.php">Add sensor</a></li>
                             </ul>
                         </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-table"></i><span class="hide-menu">Tables</span></a>

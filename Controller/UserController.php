@@ -40,6 +40,7 @@ function Login()
                 $row['password'],
                 explode(',', $row['roles'])
             );
+            $u->idStation = $row['idStation'];
             $_SESSION['user'] = serialize($u);
             header('location:../index.php');
             die();
@@ -69,6 +70,7 @@ function Register()
         $u = new User($last_id, $username, $login, $email, $tel, $password, [
             'user',
         ]);
+        $u->idStation = null;
 
         $myJSON = serialize($u);
         $_SESSION['user'] = $myJSON;
@@ -119,6 +121,36 @@ function ChangeEnabled()
     $isEnabled = $_POST['isEnabled'];
     $conn = $c->Connect();
     $sql = "UPDATE users SET isEnabled=$isEnabled WHERE id=$id";
+    $conn->query($sql);
+    header('location:/pfe/listusers.php');
+    $conn->close();
+}
+
+function AddUser()
+{
+    $c = new ConnectionController();
+    $conn = $c->Connect();
+    $d = date('Y-m-d H:i:s');
+    $username = $_POST['user-sign-up'];
+    $login = $_POST['login-sign-up'];
+    $email = $_POST['email-sign-up'];
+    $tel = $_POST['tel-sign-up'];
+    $password = md5($_POST['pass-sign-up']);
+    $roles = ['user'];
+    $role = implode(',', $roles);
+    $sql = "INSERT INTO users (username	,login,email,tel,password,created_at,roles) VALUES ('$username','$login','$email','$tel','$password','$d','$role')";
+    $conn->query($sql);
+    $conn->close();
+    header('location:/pfe/listusers.php');
+}
+
+function AssingnUser()
+{
+    $c = new ConnectionController();
+    $id = $_POST['id'];
+    $idStation = $_POST['idStation'];
+    $conn = $c->Connect();
+    $sql = "UPDATE users SET idStation=$idStation WHERE id=$id";
     $conn->query($sql);
     header('location:/pfe/listusers.php');
     $conn->close();

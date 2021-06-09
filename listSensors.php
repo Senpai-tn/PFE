@@ -46,22 +46,18 @@ include_once 'Controller/ConnectionController.php';
                                         $all = [];
                                         $c = new ConnectionController();
                                         $conn = $c->Connect();
-                                        $sql = 'SELECT * FROM users';
+                                        $sql = 'SELECT * FROM sensors';
                                         $result = $conn->query($sql);
                                         while ($row = $result->fetch_assoc()) {
                                             echo '<tr>
                                                  <td>' .
-                                                $row['username'] .
+                                                $row['ref'] .
                                                 '</td>
                                                  <td>' .
-                                                $row['login'] .
+                                                $row['type'] .
                                                 '</td>
-                                                 <td>' .
-                                                $row['email'] .
-                                                '</td>
-                                                 <td >' .
-                                                $row['tel'] .
-                                                '</td>
+                                                 <td></td>
+                                                 <td ></td>
                                                 <td >';
                                             if ($row['idStation'] != null) {
                                                 $s =
@@ -74,54 +70,20 @@ include_once 'Controller/ConnectionController.php';
                                                 echo '';
                                             }
                                             echo '</td>
-                                                 <td>' .
-                                                $row['roles'] .
-                                                '</td>
-                                                 <td> <form action="Controller/UserController.php" method="POST">
-                                                 <input type="hidden" name="id" value=' .
-                                                $row['id'] .
-                                                '
-                                                     >
-                                                     <input type="hidden" name="fn" value="ChangeRole">';
-                                            if (
-                                                strpos(
-                                                    $row['roles'],
-                                                    'admin'
-                                                ) &&
-                                                $row['id'] !== $u->id
-                                            ) {
-                                                echo '<input type="hidden" name="role" value="user">
-                                                <input class="btn btn-primary" type=submit value="Depromote">';
-                                            } elseif (
-                                                !strpos(
-                                                    $row['roles'],
-                                                    'admin'
-                                                ) &&
-                                                $row['id'] !== $u->id
-                                            ) {
-                                                echo '<input type="hidden" name="role" value="user,admin">
-                                                
-                                                <input class="btn btn-success" type=submit value="Promote">';
-                                            }
-
-                                            echo '</form>
+                                                 <td></td>
+                                                 <td> 
+                                            
                                             <form action="Controller/UserController.php" method="POST">
-                                            <input type="hidden" name="id" value=' .
-                                                $row['id'] .
+                                            <input type="hidden" name="ref" value=' .
+                                                $row['ref'] .
                                                 '
                                                      >
                                             <input type="hidden" name="fn" value="ChangeEnabled">';
 
-                                            if (
-                                                $row['isEnabled'] == 0 &&
-                                                $row['id'] !== $u->id
-                                            ) {
+                                            if ($row['isEnabled'] == 0) {
                                                 echo '<input type="hidden" name="isEnabled" value="true">
                                             <input class="btn btn-success" type=submit value="Activate">';
-                                            } elseif (
-                                                $row['isEnabled'] == 1 &&
-                                                $row['id'] !== $u->id
-                                            ) {
+                                            } elseif ($row['isEnabled'] == 1) {
                                                 echo '<input type="hidden" name="isEnabled" value="false">
                                     
                                     <input class="btn btn-danger" type=submit value="block">';

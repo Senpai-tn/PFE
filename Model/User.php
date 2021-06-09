@@ -9,7 +9,8 @@ class User
         $password,
         $roles,
         $created_at,
-        $isEnabled;
+        $isEnabled,
+        $idStation;
 
     function __construct(
         $id,
