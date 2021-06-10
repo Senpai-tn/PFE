@@ -48,6 +48,7 @@ if (!in_array('admin', $u->roles)) {
 .alert
 {
     padding-top: 75px;
+    margin:0;
 }
 
 .alert-danger{
@@ -435,5 +436,5 @@ if (!in_array('admin', $u->roles)) {
             <!-- End Sidebar scroll-->
         </aside>
         <div class="alert alert-danger hidden" id="alert" style="text-align:center" role="alert">
-        A simple primary alert—check it out!
+       
 </div>

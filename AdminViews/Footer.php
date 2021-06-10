@@ -113,9 +113,12 @@ setTimeout(() => {
             };
 
             conn.onmessage = function(e) {
+                var d = JSON.parse(e.data);
+                var msg = d.msg.slice(0,d.msg.length-1);
                 console.log(e.data);
+                
                 $("#alert").removeClass("hidden");
-                $("#alert").html("sfsfsdf");
+                $("#alert").text(msg);
                 var audioElement = document.createElement('audio');
                 audioElement.setAttribute('src', 'assets/audio/moonless-591.mp3');
                 audioElement.play();

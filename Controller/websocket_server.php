@@ -38,24 +38,15 @@ class Chat implements MessageComponentInterface
             case 'chat':
                 $user_id = $data->user_id;
                 $chat_msg = $data->chat_msg;
-                $response_from =
-                    "<span style='color:#999'><b>" .
-                    $user_id .
-                    ':</b> ' .
-                    $chat_msg .
-                    '</span><br><br>';
-                $response_to =
-                    '<b>' . $user_id . '</b>: ' . $chat_msg . '<br><br>';
+
                 // Output
-                $from->send(
-                    json_encode(['type' => $type, 'msg' => $response_from])
-                );
+                //$from->send(json_encode(['type' => $type, 'msg' => $chat_msg]));
                 foreach ($this->clients as $client) {
                     if ($from != $client) {
                         $client->send(
                             json_encode([
                                 'type' => $type,
-                                'msg' => $response_to,
+                                'msg' => $chat_msg,
                             ])
                         );
                     }

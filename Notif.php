@@ -11,10 +11,9 @@ $session = mt_rand(1, 999); ?>
 </head>
 <body>
 <div id="wrapper">
-		<div id="chat_output"></div>
-        
-		<img id="chat_input" onload="$(this).data('loaded', 'loaded');" src="assets/img/custom-select.png" />
+<input type=hidden id=ref value="<?php echo $_GET['ref']; ?>" />
 		<script type="text/javascript">
+        var ref = $("#ref").val();
         var conn;
 		jQuery(function($){
 			// Websocket
@@ -24,8 +23,7 @@ $session = mt_rand(1, 999); ?>
                 conn.send(
                 JSON.stringify({
                   type: 'chat',
-                  user_id: 15151,
-                  chat_msg: "test",
+                  chat_msg: ref ,
                 }),
               )
               window.location.href = 'index.php';
