@@ -1,6 +1,5 @@
 <?php
 set_time_limit(0);
-
 use Ratchet\MessageComponentInterface;
 use Ratchet\ConnectionInterface;
 use Ratchet\Server\IoServer;

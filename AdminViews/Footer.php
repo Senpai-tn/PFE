@@ -100,6 +100,27 @@ setTimeout(() => {
             'excel', 'pdf', 'print'
         ]
     });
+    
     </script>
+    <script type="text/javascript">
+        var conn;
+		jQuery(function($){
+			// Websocket
+			conn = new WebSocket('ws://localhost:8080');
+            conn.onopen = function(e) {
+                console.log("Connection established!");
+                
+            };
+
+            conn.onmessage = function(e) {
+                console.log(e.data);
+                $("#alert").removeClass("hidden");
+                $("#alert").html("sfsfsdf");
+                var audioElement = document.createElement('audio');
+                audioElement.setAttribute('src', 'assets/audio/moonless-591.mp3');
+                audioElement.play();
+            };
+		});
+		</script>
 </body>
 </html>

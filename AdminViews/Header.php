@@ -44,7 +44,19 @@ if (!in_array('admin', $u->roles)) {
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
+<style>
+.alert
+{
+    padding-top: 75px;
+}
 
+.alert-danger{
+    background: #f00;
+}
+.hidden{
+    display:none;
+}
+</style>
 <body class="fix-header fix-sidebar card-no-border">
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
@@ -422,3 +434,6 @@ if (!in_array('admin', $u->roles)) {
             </div>
             <!-- End Sidebar scroll-->
         </aside>
+        <div class="alert alert-danger hidden" id="alert" style="text-align:center" role="alert">
+        A simple primary alert—check it out!
+</div>
