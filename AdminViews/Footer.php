@@ -28,11 +28,7 @@
     <!-- ============================================================== -->
     <!--sparkline JavaScript -->
     <script src="assets/plugins/sparkline/jquery.sparkline.min.js"></script>
-    <!--morris JavaScript -->
-    <script src="assets/plugins/raphael/raphael-min.js"></script>
-    <script src="assets/plugins/morrisjs/morris.min.js"></script>
-    <!-- Chart JS -->
-    <script src="assets/AdminAssets/js/dashboard1.js"></script>
+
         <!-- This is data table -->
         <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
     <!-- ============================================================== -->
@@ -108,20 +104,21 @@ setTimeout(() => {
 			// Websocket
 			conn = new WebSocket('ws://localhost:8080');
             conn.onopen = function(e) {
-                console.log("Connection established!");
-                
+                console.log("Connection established!");  
             };
-
             conn.onmessage = function(e) {
+                var userStation = <?php echo $u->idStation; ?>;
                 var d = JSON.parse(e.data);
-                var msg = d.msg.slice(0,d.msg.length-1);
-                console.log(e.data);
-                
+                var msg = JSON.parse(d.msg);
                 $("#alert").removeClass("hidden");
-                $("#alert").text(msg);
-                var audioElement = document.createElement('audio');
-                audioElement.setAttribute('src', 'assets/audio/moonless-591.mp3');
-                audioElement.play();
+                    $("#alert").text(userStation);
+                    var audioElement = document.createElement('audio');
+                    audioElement.setAttribute('src', 'assets/audio/moonless-591.mp3');
+                    audioElement.play();
+                if(msg.idStation == userStation)
+                {
+                    addData(myChart,new Date().getHours(),(msg.value));
+                }         
             };
 		});
 		</script>

@@ -1,16 +1,10 @@
-<?php
-session_start();
+<?php session_start();
 include 'Model/User.php';
-include 'Controller/ConnectionController.php';
 $u = unserialize($_SESSION['user']);
 
 if (!isset($_SESSION['user'])) {
     header('location:login.php');
     return false;
-}
-
-if (!in_array('admin', $u->roles)) {
-    header('location:403.html');
 }
 ?>
 <!DOCTYPE html>
@@ -25,19 +19,15 @@ if (!in_array('admin', $u->roles)) {
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon.png">
-    <title></title>
+    <title>Admin Press Admin Template - The Ultimate Bootstrap 4 Admin Template</title>
     <!-- Bootstrap Core CSS -->
     <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- morris CSS -->
     <link href="assets/plugins/morrisjs/morris.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="assets/AdminAssets/css/style.css" rel="stylesheet">
+    <link href="assets/Userassets/css/style.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
-    <link href="assets/AdminAssets/css/colors/blue-dark.css" id="theme" rel="stylesheet">
-    <link href="assets/font-awesome/css/font-awesome.css"  rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" integrity="sha512-2ImtlRlf2VVmiGZsjm9bEyhjGW4dU7B6TNwh/hx/iSByxNENtj3WVE6o/9Lj4TJeVXPi4bnOIMXFIJJAeufa0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="assets/Userassets/css/colors/blue.css" id="theme" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -45,6 +35,8 @@ if (!in_array('admin', $u->roles)) {
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
+
+<body class="fix-header fix-sidebar card-no-border">
 <style>
 .alert
 {
@@ -59,14 +51,12 @@ if (!in_array('admin', $u->roles)) {
     display:none;
 }
 </style>
-<body class="fix-header fix-sidebar card-no-border">
     <!-- ============================================================== -->
     <!-- Preloader - style you can find in spinners.css -->
     <!-- ============================================================== -->
     <div class="preloader">
         <svg class="circular" viewBox="25 25 50 50">
-            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
-             </svg>
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" /> </svg>
     </div>
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
@@ -81,7 +71,7 @@ if (!in_array('admin', $u->roles)) {
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.php">
+                    <a class="navbar-brand" href="index.html">
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
@@ -324,12 +314,12 @@ if (!in_array('admin', $u->roles)) {
                         <!-- Profile -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/img/admin.png" alt="user" class="profile-pic" /></a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="assets/img/users/1.jpg" alt="user" class="profile-pic" /></a>
                             <div class="dropdown-menu dropdown-menu-right scale-up">
                                 <ul class="dropdown-user">
                                     <li>
                                         <div class="dw-user-box">
-                                            <div class="u-img"><img src="assets/img/admin.png" alt="user"></div>
+                                            <div class="u-img"><img src="assets/img/users/1.jpg" alt="user"></div>
                                             <div class="u-text">
                                                 <h4>Steave Jobs</h4>
                                                 <p class="text-muted">varun@gmail.com</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
@@ -358,7 +348,7 @@ if (!in_array('admin', $u->roles)) {
                 <!-- User profile -->
                 <div class="user-profile">
                     <!-- User profile image -->
-                    <div class="profile-img"> <img src="assets/img/admin.png" alt="user" />
+                    <div class="profile-img"> <img src="assets/img/users/profile.png" alt="user" />
                         <!-- this is blinking heartbit-->
                         <div class="notify setpos"> <span class="heartbit"></span> <span class="point"></span> </div>
                     </div>
@@ -366,11 +356,12 @@ if (!in_array('admin', $u->roles)) {
                     <div class="profile-text">
                         <h5><?php echo $u->username; ?></h5>
                         <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
-                        <a href="app-email.html" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
+                        <a href="mailto:someone@example.com" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
                         <a href="Controller/UserController.php?fn=Logout" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
                         <div class="dropdown-menu animated flipInY">
                             <!-- text-->
                             <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
+                            <!-- text-->
                             <div class="dropdown-divider"></div>
                             <!-- text-->
                             <a href="Controller/UserController.php?fn=Logout" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
@@ -380,62 +371,28 @@ if (!in_array('admin', $u->roles)) {
                 </div>
                 <!-- End User profile text-->
                 <!-- Sidebar navigation-->
-                
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li class="nav-devider"></li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="fa fa-users" aria-hidden="true"></i><span class="hide-menu">
-                                Users <span class="label label-rouded label-themecolor pull-right"></span></span></a>
+                        <li class="nav-small-cap">PERSONAL</li>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Dashboard <span class="label label-rouded label-themecolor pull-right">4</span></span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="adduser.php">Add new user </a></li>
-                                <li><a href="listusers.php">List of users </a></li>
-                                <li><a href="AssignUser.php">Assign user to station</a></li>
-
+                                <li><a href="index.html">Minimal </a></li>
+                                <li><a href="index2.html">Analytical</a></li>
+                                <li><a href="index3.html">Demographical</a></li>
+                                <li><a href="index4.html">Modern</a></li>
                             </ul>
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false">
-                        <i class="fa fa-building-o" aria-hidden="true"></i><span class="hide-menu">Stations <span class="label label-rouded label-primary pull-right"></span></span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="AddStation.php">Add new station </a></li>
-                                <li><a href="liststations.php">List of stations </a></li>
-                                
-                            </ul>
-                        </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img style="height: 51px;
-    width: auto;
-    margin-left: -15px;" src="assets/img/sensor.png"><span class="hide-menu">Sensors<span class="label label-rouded label-info pull-right"></span></span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="AddSensor.php">Add sensor</a></li>
-                                <li><a href="ListSensors.php">List of sensor</a></li>
-                                <li><a href="AssignSensor.php">Assign sensor</a></li>
-                            </ul>
-                        </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-table"></i><span class="hide-menu">Tables</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="table-basic.html">Basic Tables</a></li>
-                                <li><a href="table-layout.html">Table Layouts</a></li>
-                                <li><a href="table-data-table.html">Data Tables</a></li>
-                                <li><a href="table-footable.html">Footable</a></li>
-                                <li><a href="table-jsgrid.html">Js Grid Table</a></li>
-                                <li><a href="table-responsive.html">Responsive Table</a></li>
-                                <li><a href="table-bootstrap.html">Bootstrap Tables</a></li>
-                                <li><a href="table-editable-table.html">Editable Table</a></li>
-                            </ul>
-                        </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-widgets"></i><span class="hide-menu">Widgets</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="widget-apps.html">Data Widgets</a></li>
-                                <li><a href="widget-data.html">Statestic Widgets</a></li>
-                            </ul>
-                        </li>
-
+                       
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->
         </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
         <div class="alert alert-danger hidden" id="alert" style="text-align:center" role="alert">
        
-</div>
+       </div>

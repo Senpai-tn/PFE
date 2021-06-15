@@ -36,7 +36,6 @@ class Chat implements MessageComponentInterface
         $type = $data->type;
         switch ($type) {
             case 'chat':
-                $user_id = $data->user_id;
                 $chat_msg = $data->chat_msg;
 
                 // Output

@@ -12,9 +12,14 @@ $session = mt_rand(1, 999); ?>
 <body>
 <div id="wrapper">
 <input type=hidden id=ref value="<?php echo $_GET['ref']; ?>" />
+<input type=hidden id=value value="<?php echo $_GET['value']; ?>" />
+<input type=hidden id=idStation value="<?php echo $_GET['idStation']; ?>" />
 		<script type="text/javascript">
         var ref = $("#ref").val();
+        var value = $("#value").val();
+        var idStation = $("#idStation").val();
         var conn;
+        var msg = JSON.stringify({ref:ref,value:value,idStation:idStation});
 		jQuery(function($){
 			// Websocket
 			conn = new WebSocket('ws://localhost:8080');
@@ -23,12 +28,11 @@ $session = mt_rand(1, 999); ?>
                 conn.send(
                 JSON.stringify({
                   type: 'chat',
-                  chat_msg: ref ,
+                  chat_msg: msg ,
                 }),
               )
-              window.location.href = 'index.php';
+              document.write("jfebkjsdgb");
             };
-
             conn.onmessage = function(e) {
                 console.log(e.data);
             };

@@ -98,7 +98,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <div id="earning" style="height: 355px;"></div>
+                                        <canvas id="chart1" height="150"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -165,5 +165,96 @@
         <script>
                     document.title = "Dashboard";
                 </script>
+                <?php
+                $c = new ConnectionController();
+                $con = $c->Connect();
+                $data = [];
+                $time = [];
+                $sql =
+                    'SELECT * FROM `data` D, sensors S,stations ST WHERE ST.id = S.idStation and D.ref = S.ref and idStation = 5 and S.type="temp" ORDER By D.created_at ASC';
+                $result = $con->query($sql);
+                if ($result->num_rows > 0) {
+                    // output data of each row
+                    while ($row = $result->fetch_array()) {
+                        $date = strtotime($row[3]);
+                        array_push($data, $row['value']);
+                        array_push($time, date('H', $date));
+                    }
+                } else {
+                    echo '0 results';
+                }
+
+                $con->close();
+                ?>
+        <script src="assets/plugins/jquery/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+        var data = <?php echo json_encode($data); ?>;
+        var time = <?php echo json_encode($time); ?>;
+        var ctx = document.getElementById('chart1').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: time,
+                datasets: [{
+                    label: 'Temp',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                },{
+                    label: 'Press',
+                    data: [1, 1, 1, 1, 1, 1],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+function addData(chart, label, data) {
+    chart.data.labels.push(label);
+    chart.data.datasets[0].data.push(data);
+
+    chart.update();
+}
+
+        </script>
 <?php include 'AdminViews/Footer.php'; ?>
        
