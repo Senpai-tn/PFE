@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 10 juin 2021 à 21:22
+-- Généré le : mar. 15 juin 2021 à 21:48
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.4.9
 
@@ -37,7 +37,16 @@ CREATE TABLE IF NOT EXISTS `data` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `ref` (`ref`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `data`
+--
+
+INSERT INTO `data` (`id`, `ref`, `value`, `created_at`) VALUES
+(1, 'dfgsdfgdfsgd', '30', '2021-06-15 13:37:53'),
+(2, 'rref5188er1f5', '0', '2021-06-15 13:37:53'),
+(3, 'dfgsdfgdfsgd', '22', '2021-06-15 08:47:36');
 
 -- --------------------------------------------------------
 
@@ -61,8 +70,8 @@ CREATE TABLE IF NOT EXISTS `sensors` (
 --
 
 INSERT INTO `sensors` (`ref`, `type`, `created_at`, `idStation`, `isEnabled`) VALUES
-('dfgsdfgdfsgd', 'dfsgdsgd', '2021-06-09 22:22:50', NULL, 1),
-('rref5188er1f5', 'dsfdbdsf', '2021-06-09 22:16:41', 1, 1);
+('dfgsdfgdfsgd', 'temp', '2021-06-09 22:22:50', 5, 1),
+('rref5188er1f5', 'pression', '2021-06-09 22:16:41', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -113,17 +122,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   KEY `idStation` (`idStation`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `username`, `login`, `password`, `tel`, `created_at`, `isEnabled`, `roles`, `idStation`) VALUES
-(1, 'khaled@gmail.com', 'Senpai', 'Senpai', 'c4ca4238a0b923820dcc509a6f75849b', '1144', '2021-06-01 18:11:02', 1, 'user,admin', 2),
-(6, 'khaledsahli@gmail.com', 'Test', 'Senpai', 'c4ca4238a0b923820dcc509a6f75849b', '1144', '2021-06-01 18:11:02', 0, 'user', 5),
+(1, 'khaled@gmail.com', 'Senpai', 'Senpai', 'c4ca4238a0b923820dcc509a6f75849b', '1144', '2021-06-01 18:11:02', 1, 'user,admin', 5),
+(6, 'khaledsahli@gmail.com', 'Test', 'Senpai', 'c4ca4238a0b923820dcc509a6f75849b', '1144', '2021-06-01 18:11:02', 1, 'user', 5),
 (7, 'khaled2@gmail.com', 'Khaled', 'Senpai', 'b6d767d2f8ed5d21a44b0e5886680cb9', '14', '2021-06-08 15:04:20', 0, 'user', 4),
-(8, '', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '2021-06-08 15:14:48', 0, 'user,admin', 5),
+(8, '', '', '', 'd41d8cd98f00b204e9800998ecf8427e', '', '2021-06-08 15:14:48', 1, 'user,admin', 5),
 (9, 'khaled25@gmail.com', 'dsgfgdfs', 'fbfdb', '0cc175b9c0f1b6a831c399e269772661', '52572', '2021-06-08 15:26:10', 0, 'user,admin', NULL),
 (10, 'a@gmail.com', 'a', 'a', '0cc175b9c0f1b6a831c399e269772661', '1', '2021-06-08 15:32:05', 1, 'user', 3);
 
