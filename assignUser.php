@@ -40,7 +40,7 @@ datalist {
   
   <div class="form-group">
     <label for="exampleFormControlSelect1">User </label>
-    <label for="browsersUsers">( Choose your browser from the list ) :</label>
+    <label for="browsersUsers">( Choose the user ) :</label>
   <input list="browsersUsers" class="form-control" id="exampleFormControlSelect1" name="id">
   <datalist id="browsersUsers">
   <?php
@@ -55,7 +55,7 @@ datalist {
   </div>
   <div class="form-group">
     <label for="exampleFormControlSelect2">Station :</label>
-    <label for="browsersStations">( Choose your browser from the list ) :</label>
+    <label for="browsersStations">( Choose the station ) :</label>
   <input list="browsersStations" class="form-control" id="exampleFormControlSelect1" name="idStation">
   <datalist id="browsersStations">
   <?php

@@ -40,7 +40,7 @@ datalist {
   
   <div class="form-group">
     <label for="exampleFormControlSelect1">Sensors </label>
-    <label for="browsersSensors">( Choose your browser from the list ) :</label>
+    <label for="browsersSensors">( Choose the sensor ) :</label>
   <input list="browsersSensors" class="form-control" id="exampleFormControlSelect1" name="ref">
   <datalist id="browsersSensors">
   <?php
@@ -55,7 +55,7 @@ datalist {
   </div>
   <div class="form-group">
     <label for="exampleFormControlSelect2">Station :</label>
-    <label for="browsersStations">( Choose your browser from the list ) :</label>
+    <label for="browsersStations">( Choose the station ) :</label>
   <input list="browsersStations" class="form-control" id="exampleFormControlSelect1" name="idStation">
   <datalist id="browsersStations">
   <?php
@@ -76,6 +76,9 @@ datalist {
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-                    document.title = "Assign User";
-                </script>
+  document.title = "Assign User";
+</script>
+
+
+
 <?php include 'AdminViews/Footer.php'; ?>

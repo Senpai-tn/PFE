@@ -1,5 +1,3 @@
-<?php
-$session = mt_rand(1, 999); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,12 +12,38 @@ $session = mt_rand(1, 999); ?>
 <input type=hidden id=ref value="<?php echo $_GET['ref']; ?>" />
 <input type=hidden id=value value="<?php echo $_GET['value']; ?>" />
 <input type=hidden id=idStation value="<?php echo $_GET['idStation']; ?>" />
+<?php
+include_once 'Controller/ConnectionController.php';
+$c = new ConnectionController();
+$conn = $c->Connect();
+$ref = $_GET['ref'];
+$value = $_GET['value'];
+$type = '';
+if ($ref[strlen($ref) - 1] == 1) {
+    $type = 'temp';
+} elseif ($ref[strlen($ref) - 1] == 2) {
+    $type = 'press';
+} else {
+    $type = 'debit';
+}
+
+$sql = "INSERT INTO data (ref	,value) VALUES ('$ref',$value)";
+if ($conn->query($sql) === true) {
+    echo 'success';
+} else {
+    echo 'error';
+}
+?>
 		<script type="text/javascript">
         var ref = $("#ref").val();
         var value = $("#value").val();
         var idStation = $("#idStation").val();
+        var type = "<?php echo $type; ?>";
         var conn;
-        var msg = JSON.stringify({ref:ref,value:value,idStation:idStation});
+        var msg = JSON.stringify({ref:ref,value:value,idStation:idStation,type:type});
+        console.log('====================================');
+        console.log(msg);
+        console.log('====================================');
 		jQuery(function($){
 			// Websocket
 			conn = new WebSocket('ws://localhost:8080');
@@ -31,7 +55,7 @@ $session = mt_rand(1, 999); ?>
                   chat_msg: msg ,
                 }),
               )
-              document.write("jfebkjsdgb");
+              document.write(" Data saved");
             };
             conn.onmessage = function(e) {
                 console.log(e.data);

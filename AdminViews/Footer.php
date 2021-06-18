@@ -110,14 +110,31 @@ setTimeout(() => {
                 var userStation = <?php echo $u->idStation; ?>;
                 var d = JSON.parse(e.data);
                 var msg = JSON.parse(d.msg);
+                console.log('========Footer=============');
+                console.log(msg);
+                console.log('====================================');
                 $("#alert").removeClass("hidden");
-                    $("#alert").text(userStation);
+                    $("#alert").text(" the sensor "+msg.ref+" of type "+msg.type+" in the station "+msg.idStation+" has value "+msg.value);
                     var audioElement = document.createElement('audio');
                     audioElement.setAttribute('src', 'assets/audio/moonless-591.mp3');
                     audioElement.play();
                 if(msg.idStation == userStation)
                 {
-                    addData(myChart,new Date().getHours(),(msg.value));
+                    var indice ; 
+                    switch (msg.type) {
+                        case "temp":
+                            indice=0;
+                            break;
+                        case "press":
+                            indice=1;
+                            break;
+                        case "debit":
+                            indice=2;
+                            break;
+                        default:
+                            break;
+                    }
+                    addData(myChart,new Date().getHours(),indice,msg.value);
                 }         
             };
 		});

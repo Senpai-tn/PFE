@@ -10,22 +10,86 @@ if (isset($_GET['fn'])) {
     $_GET['fn']();
 }
 
-function AddData()
+ function GetHistory()
 {
+    $idStation = $_POST['idStation'];
     $c = new ConnectionController();
-    $conn = $c->Connect();
-    $d = date('Y-m-d H:i:s');
-    $ref = $_POST['ref'];
-    $type = $_POST['type'];
-    $sql = "INSERT INTO sensors (ref	,type,created_at) VALUES ('$ref','$type','$d')";
-    if ($conn->query($sql) === true) {
-        header('location:/pfe/listsensors.php');
-        return false;
-    } else {
-        $_SESSION['error'] = 'Reference already exist';
-        header('location:/pfe/Addsensor.php');
-        return false;
+    $con = $c->Connect();
+    $temp = [];
+    $press = [];
+    $debit = [];
+    $time = [];
+    $sql =
+        'SELECT * FROM `data` D, sensors S,stations ST 
+    WHERE ST.id = S.idStation 
+    and D.ref = S.ref 
+    and idStation = ' .
+        $idStation .
+        ' 
+    and S.type="temp" 
+    ORDER By D.created_at ASC';
+    $result = $con->query($sql);
+    if ($result->num_rows > 0) {
+        $time = [];
+        // output data of each row
+        while ($row = $result->fetch_array()) {
+            array_push($temp, $row['value']);
+            $date = strtotime($row[3]);
+            array_push($time, date('H', $date));
+        }
     }
+
+    $con->close();
+
+    $con = $c->Connect();
+    $sql1 =
+        'SELECT * FROM `data` D, sensors S,stations ST 
+    WHERE ST.id = S.idStation 
+    and D.ref = S.ref 
+    and idStation = ' .
+        $idStation .
+        ' 
+    and S.type="press" 
+    ORDER By D.created_at ASC';
+    $result = $con->query($sql1);
+    if ($result->num_rows > 0) {
+        $time = [];
+        // output data of each row
+        while ($row = $result->fetch_array()) {
+            array_push($press, $row['value']);
+            $date = strtotime($row[3]);
+            array_push($time, date('H', $date));
+        }
+    }
+
+    $con->close();
+
+    $con = $c->Connect();
+    $sql2 =
+        'SELECT * FROM `data` D, sensors S,stations ST 
+    WHERE ST.id = S.idStation 
+    and D.ref = S.ref 
+    and idStation = ' .
+        $idStation .
+        ' 
+    and S.type="debit" 
+    ORDER By D.created_at ASC';
+    $result = $con->query($sql2);
+    if ($result->num_rows > 0) {
+        $time = [];
+        // output data of each row
+        while ($row = $result->fetch_array()) {
+            array_push($debit, $row['value']);
+            $date = strtotime($row[3]);
+            array_push($time, date('H', $date));
+        }
+    }
+
+    $res['temp'] = $temp;
+    $res['press'] = $press;
+    $res['debit'] = $debit;
+    $res['time'] = $time;
+    echo json_encode($res);
 }
 
 ?>

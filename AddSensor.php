@@ -38,7 +38,11 @@
           </div>
           <div class="group">
             <label for="type" class="label">Type </label>
-            <input id="type" required name="type" type="text" class="input">
+            <select style="    width: 100%;" class="custom-select my-1 mr-sm-2" name="type" id="inlineFormCustomSelectPref">
+              <option value="temp">Temp</option>
+              <option value="press">Press</option>
+              <option value="debit">Debit</option>
+            </select>
           </div>
           <div class="group">
             <input type="submit" class="button" value="Add sensor">

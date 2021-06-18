@@ -1,4 +1,23 @@
-<?php include 'AdminViews/Header.php'; ?>
+<?php include 'AdminViews/Header.php';
+$c = new ConnectionController();
+$con = $c->Connect();
+
+$sql = 'SELECT count(*) FROM users ';
+$result = $con->query($sql);
+$users = $result->fetch_array();
+
+$sql = 'SELECT count(*) FROM stations ';
+$result = $con->query($sql);
+$stations = $result->fetch_array();
+
+$sql = 'SELECT count(*) FROM sensors ';
+$result = $con->query($sql);
+$sensors = $result->fetch_array();
+
+$sql = 'SELECT count(*) FROM data ';
+$result = $con->query($sql);
+$data = $result->fetch_array();
+?>
 <div class="page-wrapper">
             <!-- Container fluid  -->
             <!-- ============================================================== -->
@@ -13,8 +32,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <h2 class="m-b-0"><i class="mdi mdi-briefcase-check text-info"></i></h2>
-                                    <h3 class="">2456</h3>
-                                    <h6 class="card-subtitle">New Projects</h6></div>
+                                    <h3 class=""><?php echo $users[0]; ?></h3>
+                                    <h6 class="card-subtitle">Users</h6></div>
                                 <div class="col-12">
                                     <div class="progress">
                                         <div class="progress-bar bg-info" role="progressbar" style="width: 85%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
@@ -30,8 +49,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <h2 class="m-b-0"><i class="mdi mdi-alert-circle text-success"></i></h2>
-                                    <h3 class="">546</h3>
-                                    <h6 class="card-subtitle">Pending Project</h6></div>
+                                    <h3 class=""><?php echo $stations[0]; ?></h3>
+                                    <h6 class="card-subtitle">Stations</h6></div>
                                 <div class="col-12">
                                     <div class="progress">
                                         <div class="progress-bar bg-success" role="progressbar" style="width: 40%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
@@ -47,8 +66,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <h2 class="m-b-0"><i class="mdi mdi-wallet text-purple"></i></h2>
-                                    <h3 class="">$24561</h3>
-                                    <h6 class="card-subtitle">Total Cost</h6></div>
+                                    <h3 class=""><?php echo $sensors[0]; ?></h3>
+                                    <h6 class="card-subtitle">Sensors</h6></div>
                                 <div class="col-12">
                                     <div class="progress">
                                         <div class="progress-bar bg-primary" role="progressbar" style="width: 56%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
@@ -64,8 +83,8 @@
                             <div class="row">
                                 <div class="col-12">
                                     <h2 class="m-b-0"><i class="mdi mdi-buffer text-warning"></i></h2>
-                                    <h3 class="">$30010</h3>
-                                    <h6 class="card-subtitle">Total Earnings</h6></div>
+                                    <h3 class=""><?php echo $data[0]; ?></h3>
+                                    <h6 class="card-subtitle">Data</h6></div>
                                 <div class="col-12">
                                     <div class="progress">
                                         <div class="progress-bar bg-warning" role="progressbar" style="width: 26%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
@@ -104,7 +123,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Column -->
+                    <!-- Column 
                     <div class="col-lg-4 col-xlg-3">
                         <div class="card card-inverse card-info">
                             <div class="card-body">
@@ -145,7 +164,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Column -->
+                    Column -->
                 </div>
                 <!-- Row -->
                 <!-- Row -->
@@ -165,40 +184,17 @@
         <script>
                     document.title = "Dashboard";
                 </script>
-                <?php
-                $c = new ConnectionController();
-                $con = $c->Connect();
-                $data = [];
-                $time = [];
-                $sql =
-                    'SELECT * FROM `data` D, sensors S,stations ST WHERE ST.id = S.idStation and D.ref = S.ref and idStation = 5 and S.type="temp" ORDER By D.created_at ASC';
-                $result = $con->query($sql);
-                if ($result->num_rows > 0) {
-                    // output data of each row
-                    while ($row = $result->fetch_array()) {
-                        $date = strtotime($row[3]);
-                        array_push($data, $row['value']);
-                        array_push($time, date('H', $date));
-                    }
-                } else {
-                    echo '0 results';
-                }
-
-                $con->close();
-                ?>
         <script src="assets/plugins/jquery/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
-        var data = <?php echo json_encode($data); ?>;
-        var time = <?php echo json_encode($time); ?>;
-        var ctx = document.getElementById('chart1').getContext('2d');
-        var myChart = new Chart(ctx, {
+               var ctx = document.getElementById('chart1').getContext('2d');
+               myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: time,
+                labels: [],
                 datasets: [{
                     label: 'Temp',
-                    data: data,
+                    data: [],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -218,7 +214,121 @@
                     borderWidth: 1
                 },{
                     label: 'Press',
-                    data: [1, 1, 1, 1, 1, 1],
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                },{
+                    label: 'Debit',
+                    data: [],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+temp=[];
+        var idStation= <?php echo $u->idStation; ?>;
+        $.ajax({
+    url:'http://localhost/pfe/Controller/Datacontroller.php',
+    type:"json",
+    method:"POST",
+    data:{
+        "fn":"getHistory",
+        "idStation":idStation
+    },
+    success:function(data){
+      if(data.includes("0 results") == false )
+      {
+        myChart.destroy();
+        res = JSON.parse(data) ;
+        var temp = res.temp;
+        var press = res.press;
+        var debit = res.debit;
+        var time = res.time;
+        var ctx = document.getElementById('chart1').getContext('2d');
+        myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: time,
+                datasets: [{
+                    label: 'Temp',
+                    data: temp,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                },{
+                    label: 'Press',
+                    data: press,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                },{
+                    label: 'Debit',
+                    data: debit,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -247,11 +357,16 @@
             }
         });
 
+      }
+     
+    }
+})
 
-function addData(chart, label, data) {
+
+function addData(chart, label,indice, data) {
+    if(chart.data.labels[chart.data.labels.length -1] != label)
     chart.data.labels.push(label);
-    chart.data.datasets[0].data.push(data);
-
+    chart.data.datasets[indice].data.push(data);
     chart.update();
 }
 
