@@ -38,15 +38,31 @@ datalist {
 
   
   <div class="form-group">
+  <label for="exampleFormControlSelect2">Search by region :</label>
+  <input list="browsersRegion" class="form-control" id="exampleFormControlSelect2" name="region">
     <label for="exampleFormControlSelect2">Station :</label>
     <label for="browsersStations">( Choose the station ) :</label>
   <input list="browsersStations" class="form-control" id="exampleFormControlSelect1" name="idStation">
+  
   <datalist id="browsersStations">
   <?php
   $sql = 'SELECT * FROM stations';
   $result = $conn->query($sql);
   while ($row = $result->fetch_assoc()) {
       echo '<option value=' . $row['id'] . '>' . $row['name'] . '</option>';
+  }
+  ?>
+  </datalist>
+  <datalist id="browsersRegion">
+  <?php
+  $sql = 'SELECT distinct(region),id FROM stations';
+  $result = $conn->query($sql);
+  while ($row = $result->fetch_assoc()) {
+      echo '<option value=' .
+          $row['region'] .
+          '>' .
+          $row['region'] .
+          '</option>';
   }
   ?>
   </datalist>
@@ -147,6 +163,33 @@ datalist {
             }
         });
 temp=[];
+
+$('#exampleFormControlSelect2').on('input',function(e){
+    $.ajax({
+        url:'http://localhost/pfe/Controller/StationController.php',
+    type:"json",
+    method:"POST",
+    data:{
+        "fn":"FindStationByRegion",
+        "region":$('#exampleFormControlSelect2').val()
+    },
+    success:function(data){
+        res = JSON.parse(data);
+        if(res.length > 0)
+        {
+            $("#browsersStations").html("");
+        }
+        for (let index = 0; index < res.length; index++) {
+            console.log('====================================');
+            console.log(res[index]);
+            console.log('====================================');
+            $("#browsersStations").append(new Option(res[index].name, res[index].id))     
+        }
+    }
+    })
+});
+
+
 $('#exampleFormControlSelect1').on('input',function(e){
  $.ajax({
     url:'http://localhost/pfe/Controller/Datacontroller.php',

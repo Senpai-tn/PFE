@@ -113,11 +113,35 @@ setTimeout(() => {
                 console.log('========Footer=============');
                 console.log(msg);
                 console.log('====================================');
-                $("#alert").removeClass("hidden");
+                console.log('');
+                console.log('');
+             
+                var checkInterval=false;
+                if((msg.type == "temp")&&((msg.value > 40 )||(msg.value < 20 ))) 
+                {
+                    checkInterval = true;
+                }   
+                
+
+                if((msg.type == "press")&&((msg.value > 40 )||(msg.value < 20 ))) 
+                {
+                    checkInterval = true;
+                }
+
+                if((msg.type == "debit")&&((msg.value > 40 )||(msg.value < 20 ))) 
+                {
+                    checkInterval = true;
+                }
+                
+                if(checkInterval)
+                {
+                    $("#alert").removeClass("hidden");
                     $("#alert").text(" the sensor "+msg.ref+" of type "+msg.type+" in the station "+msg.idStation+" has value "+msg.value);
                     var audioElement = document.createElement('audio');
                     audioElement.setAttribute('src', 'assets/audio/moonless-591.mp3');
                     audioElement.play();
+                }
+                
                 if(msg.idStation == userStation)
                 {
                     var indice ; 

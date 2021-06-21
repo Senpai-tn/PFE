@@ -38,4 +38,24 @@ function ChangeEnabled()
     $conn->close();
 }
 
+function FindStationByRegion()
+{
+    $stations = [];
+    $c = new ConnectionController();
+    $con = $c->Connect();
+    $region = $_POST['region'];
+    $sql =
+        'SELECT * FROM stations 
+    WHERE region = "' .
+        $region .
+        '"';
+    $result = $con->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            array_push($stations, $row);
+        }
+    }
+    echo json_encode($stations);
+}
+
 ?>

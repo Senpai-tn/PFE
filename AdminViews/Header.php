@@ -48,8 +48,14 @@ if (!in_array('admin', $u->roles)) {
 <style>
 .alert
 {
-    padding-top: 75px;
-    margin:0;
+    padding-top: 0;
+    margin: 0;
+    font-weight: bolder;
+    font-size: 27px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
 }
 
 .alert-danger{
@@ -81,7 +87,7 @@ if (!in_array('admin', $u->roles)) {
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.php">
+                    <a class="navbar-brand" href="admin.php">
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
@@ -129,12 +135,10 @@ if (!in_array('admin', $u->roles)) {
                                         <div class="dw-user-box">
                                             <div class="u-img"><img src="assets/img/admin.png" alt="user"></div>
                                             <div class="u-text">
-                                                <h4>Steave Jobs</h4>
-                                                <p class="text-muted">varun@gmail.com</p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                                <h4><?php echo $u->username; ?></h4>
+                                                <p class="text-muted"><?php echo $u->email; ?></p><a href="pages-profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
                                         </div>
                                     </li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#"><i class="ti-user"></i> My Profile</a></li>
                                     <li role="separator" class="divider"></li>
                                     <li><a href="Controller/UserController.php?fn=Logout"><i class="fa fa-power-off"></i> Logout</a></li>
                                 </ul>
@@ -163,17 +167,8 @@ if (!in_array('admin', $u->roles)) {
                     <!-- User profile text-->
                     <div class="profile-text">
                         <h5><?php echo $u->username; ?></h5>
-                        <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
-                        <a href="app-email.html" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
-                        <a href="Controller/UserController.php?fn=Logout" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a>
-                        <div class="dropdown-menu animated flipInY">
-                            <!-- text-->
-                            <a href="#" class="dropdown-item"><i class="ti-user"></i> My Profile</a>
-                            <div class="dropdown-divider"></div>
-                            <!-- text-->
-                            <a href="Controller/UserController.php?fn=Logout" class="dropdown-item"><i class="fa fa-power-off"></i> Logout</a>
-                            <!-- text-->
-                        </div>
+                        <a href="Controller/UserController.php?fn=Logout"  class="btn-danger" data-toggle="tooltip" title="Logout"><i style="color:#fff" class="mdi mdi-power"></i></a>
+                        
                     </div>
                 </div>
                 <!-- End User profile text-->

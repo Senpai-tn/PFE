@@ -39,18 +39,62 @@
             };
 
             conn.onmessage = function(e) {
+                conn.onmessage = function(e) {
                 var userStation = <?php echo $u->idStation; ?>;
                 var d = JSON.parse(e.data);
                 var msg = JSON.parse(d.msg);
-                if(msg.idStation == userStation)
+                console.log('========Footer=============');
+                console.log(msg);
+                console.log('====================================');
+                console.log('');
+                console.log('');
+             
+                var checkInterval=false;
+                if((msg.type == "temp")&&((msg.value > 40 )||(msg.value < 20 ))) 
+                {
+                    checkInterval = true;
+                }   
+                
+
+                if((msg.type == "press")&&((msg.value > 40 )||(msg.value < 20 ))) 
+                {
+                    checkInterval = true;
+                }
+
+                if((msg.type == "debit")&&((msg.value > 40 )||(msg.value < 20 ))) 
+                {
+                    checkInterval = true;
+                }
+                
+                if(checkInterval)
+                {
+                    if(msg.idStation == userStation)
                 {
                     $("#alert").removeClass("hidden");
-                    $("#alert").text(userStation);
+                    $("#alert").text(" the sensor "+msg.ref+" of type "+msg.type+" in the station "+msg.idStation+" has value "+msg.value);
                     var audioElement = document.createElement('audio');
                     audioElement.setAttribute('src', 'assets/audio/moonless-591.mp3');
                     audioElement.play();
-                    addData(myChart,'55',(msg.value));
-                }         
+                    var indice ; 
+                    switch (msg.type) {
+                        case "temp":
+                            indice=0;
+                            break;
+                        case "press":
+                            indice=1;
+                            break;
+                        case "debit":
+                            indice=2;
+                            break;
+                        default:
+                            break;
+                    }
+                    addData(myChart,new Date().getHours(),indice,msg.value);
+                }   
+                }
+                
+                      
+            };   
             };
 		});
 		</script>
