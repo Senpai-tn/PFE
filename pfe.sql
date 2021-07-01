@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 18 juin 2021 à 11:48
+-- Généré le : jeu. 01 juil. 2021 à 20:04
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `data` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `ref` (`ref`)
-) ENGINE=InnoDB AUTO_INCREMENT=4602 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4617 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `data`
@@ -103,10 +103,7 @@ INSERT INTO `data` (`id`, `ref`, `value`, `created_at`) VALUES
 (125, 'ref53', 27, '2021-06-16 08:08:45'),
 (126, 'ref53', 17, '2021-06-16 09:08:45'),
 (127, 'ref53', 24, '2021-06-16 10:08:45'),
-(128, 'ref21', 102, '2021-06-16 10:45:08'),
-(4599, 'ref51', 28, '2021-06-16 22:37:12'),
-(4600, 'ref52', 30, '2021-06-16 22:37:21'),
-(4601, 'ref53', 13, '2021-06-16 22:37:35');
+(128, 'ref21', 102, '2021-06-16 10:45:08');
 
 -- --------------------------------------------------------
 
@@ -168,10 +165,10 @@ CREATE TABLE IF NOT EXISTS `stations` (
 --
 
 INSERT INTO `stations` (`id`, `name`, `region`, `gouvernorat`, `created_at`, `isEnabled`) VALUES
-(1, 'a', 'g', 'g', '2021-06-08 17:07:16', 1),
-(2, 'g', 'g', 'g', '2021-06-08 17:07:16', 1),
-(3, 'g', 'g', 'g', '2021-06-08 20:43:35', 1),
-(4, 'g', 'g', 'g', '2021-06-08 20:44:22', 1),
+(1, 'a', 'g1', 'g', '2021-06-08 17:07:16', 1),
+(2, 'b', 'g2', 'g', '2021-06-08 17:07:16', 1),
+(3, 'c', 'g', 'g', '2021-06-08 20:43:35', 1),
+(4, 'd', 'g', 'g', '2021-06-08 20:44:22', 1),
 (5, 'bdfsbdfbsdfs', 'bdfsbdfsbdfsbdfsb', 'dfbdfsbfdbsdfb', '2021-06-08 20:45:18', 1);
 
 -- --------------------------------------------------------
