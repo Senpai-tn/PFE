@@ -18,6 +18,7 @@ export default function Login({ navigation }) {
   const state = useSelector((state) => state);
   const [Login, setLogin] = useState("");
   const [LoginError, setLoginError] = useState(false);
+  const [deletedError, setDeletedError] = useState(false);
   const [Password, setPassword] = useState("");
   const [PasswordError, setPasswordError] = useState(false);
 
@@ -40,10 +41,17 @@ export default function Login({ navigation }) {
         if (res.data.message == "not exist") {
           setLoginError(true);
           setPasswordError(false);
+          setDeletedError(false);
         }
         if (res.data.message == "password error") {
           setLoginError(false);
           setPasswordError(true);
+          setDeletedError(false);
+        }
+        if (res.data.message == "user blocked") {
+          setLoginError(false);
+          setPasswordError(false);
+          setDeletedError(true);
         }
         if (res.data.message == "success") {
           StoreUser(res.data.user);
@@ -82,6 +90,18 @@ export default function Login({ navigation }) {
               }}
             >
               Login not foud
+            </Text>
+          ) : null}
+          {deletedError ? (
+            <Text
+              style={{
+                color: "#f00",
+                textAlign: "left",
+                fontSize: 15,
+                marginTop: -20,
+              }}
+            >
+              This accompt was deleted
             </Text>
           ) : null}
           <Input
@@ -142,7 +162,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
-    backgroundColor: "#F5F7B2",
+    backgroundColor: "#fff",
   },
   form: {
     height: 300,

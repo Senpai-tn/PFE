@@ -1,76 +1,30 @@
-import React, { useEffect, useState } from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import {
   View,
   Text,
-  SafeAreaView,
   StyleSheet,
-  TouchableOpacity,
+  SafeAreaView,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
+import { Input } from "react-native-elements";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { Input } from "react-native-elements/dist/input/Input";
-import axios from "axios";
-import { API_TOKEN, API_URL } from "@env";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { API_URL } from "@env";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Constants from "expo-constants";
-import * as Notifications from "expo-notifications";
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
-export default function Register({ navigation }) {
-  const [expoPushToken, setExpoPushToken] = useState("");
-  const [Login, setLogin] = useState("");
+export default function EditProfile({ navigation }) {
+  const user = useSelector((state) => state.user);
+  const [Login, setLogin] = useState(user.login);
   const [Password, setPassword] = useState("");
-  const [FirstName, setFirstName] = useState("");
-  const [LastName, setLastName] = useState("");
-  const [Email, setEmail] = useState("");
-  const [Tel, setTel] = useState("");
-  const [Adress, setAdress] = useState("");
+  const [FirstName, setFirstName] = useState(user.firstName);
+  const [LastName, setLastName] = useState(user.lastName);
+  const [Email, setEmail] = useState(user.email);
+  const [Tel, setTel] = useState(user.tel);
+  const [Adress, setAdress] = useState(user.adress);
   const [LoginError, setLoginError] = useState(false);
   const dispatch = useDispatch();
-  useEffect(() => {
-    registerForPushNotificationsAsync().then((token) => {
-      setExpoPushToken(token);
-      console.log(expoPushToken);
-    });
-  });
-
-  async function registerForPushNotificationsAsync() {
-    let token;
-    if (Constants.isDevice) {
-      const { status: existingStatus } =
-        await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      if (finalStatus !== "granted") {
-        alert("Failed to get push token for push notification!");
-        return;
-      }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
-    } else {
-      alert("Must use physical device for Push Notifications");
-    }
-    if (Platform.OS === "android") {
-      Notifications.setNotificationChannelAsync("default", {
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: "#FF231F7C",
-      });
-    }
-
-    return token;
-  }
   async function StoreUser(user) {
     try {
       await AsyncStorage.setItem("@user", JSON.stringify(user));
@@ -78,9 +32,10 @@ export default function Register({ navigation }) {
       // saving error
     }
   }
-  const RegisterAction = () => {
+
+  function UpdateAction() {
     axios
-      .post(API_URL + "/register", {
+      .put(API_URL + "/", {
         firstName: FirstName,
         lastName: LastName,
         email: Email,
@@ -88,21 +43,22 @@ export default function Register({ navigation }) {
         tel: Tel,
         login: Login,
         password: Password,
-        expo_id: expoPushToken,
       })
       .then((res) => {
-        if (res.data.message == "exist") {
+        if (res.data.message == "error") {
           setLoginError(true);
         } else if (res.data.message == "success") {
           StoreUser(res.data.user);
           dispatch({ type: "LOGGED", user: res.data.user });
+          navigation.goBack();
         } else {
         }
       })
       .catch((e) => {
         console.log(e.message);
       });
-  };
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.form} showsVerticalScrollIndicator={false}>
@@ -112,6 +68,7 @@ export default function Register({ navigation }) {
               onChangeText={(e) => {
                 setFirstName(e);
               }}
+              value={FirstName}
               placeholder={"First Name"}
               leftIcon={<Icon name="vcard" size={30} color="#1CC5DC" />}
             />
@@ -119,6 +76,7 @@ export default function Register({ navigation }) {
               onChangeText={(e) => {
                 setLastName(e);
               }}
+              value={LastName}
               placeholder="Last Name"
               leftIcon={<Icon name="vcard" size={30} color="#1CC5DC" />}
             />
@@ -126,6 +84,7 @@ export default function Register({ navigation }) {
               onChangeText={(e) => {
                 setLogin(e);
               }}
+              value={Login}
               placeholder="Login"
               leftIcon={<Icon name="user" size={30} color="#1CC5DC" />}
             />
@@ -146,12 +105,14 @@ export default function Register({ navigation }) {
                 setTel(e);
               }}
               placeholder="Tel"
+              value={Tel}
               leftIcon={<Icon name="phone" size={30} color="#1CC5DC" />}
             />
             <Input
               onChangeText={(e) => {
                 setAdress(e);
               }}
+              value={Adress}
               placeholder="Adress"
               leftIcon={<Icon name="map" size={30} color="#1CC5DC" />}
             />
@@ -159,13 +120,14 @@ export default function Register({ navigation }) {
               onChangeText={(e) => {
                 setPassword(e);
               }}
-              placeholder="Password"
+              placeholder="new Password"
               leftIcon={<Icon name="lock" size={30} color="#1CC5DC" />}
             />
             <Input
               onChangeText={(e) => {
                 setEmail(e);
               }}
+              value={Email}
               placeholder="Email"
               leftIcon={<Icon name="envelope" size={30} color="#1CC5DC" />}
             />
@@ -173,27 +135,28 @@ export default function Register({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              RegisterAction();
+              UpdateAction();
             }}
           >
-            <View style={{ backgroundColor: "#1CC5DC" }}>
+            <View style={{ backgroundColor: "orange" }}>
               <Text
-                style={{ color: "#F5F7B2", textAlign: "center", fontSize: 35 }}
+                style={{ color: "#FFF", textAlign: "center", fontSize: 35 }}
               >
-                Register
+                Update
               </Text>
             </View>
           </TouchableOpacity>
+
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Login");
+              navigation.goBack();
             }}
           >
-            <View style={{ backgroundColor: "#890596", marginTop: "10%" }}>
+            <View style={{ backgroundColor: "#f00", marginTop: "10%" }}>
               <Text
-                style={{ color: "#F5F7B2", textAlign: "center", fontSize: 35 }}
+                style={{ color: "#FFF", textAlign: "center", fontSize: 35 }}
               >
-                Login
+                Cancel
               </Text>
             </View>
           </TouchableOpacity>

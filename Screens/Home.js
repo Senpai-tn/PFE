@@ -1,23 +1,29 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView } from "react-native";
 import Post from "../Components/Post";
 import { API_URL } from "@env";
+import BottomBar from "../Components/BottomBar";
 
-export default function Home() {
+export default function Home({ navigation }) {
   const [Posts, setPosts] = useState([]);
-  axios.get(API_URL + "/post", { params: {} }).then((res) => {
-    setPosts(res.data);
-    console.log("res");
-  });
+  useEffect(() => {
+    axios.get(API_URL + "/post").then((res) => {
+      if (res.data.message == "success") setPosts(res.data.posts);
+    });
+    return () => {};
+  }, []);
 
   return (
-    <View>
+    <View style={{ height: "100%" }}>
       <ScrollView>
         {Posts.map((post, key) => {
-          return <Post key={key} user={post} />;
+          return <Post key={key} post={post} />;
         })}
       </ScrollView>
+      <View style={{ position: "absolute", bottom: 0 }}>
+        <BottomBar navigation={navigation} />
+      </View>
     </View>
   );
 }
