@@ -4,8 +4,10 @@ import { View, Text, ScrollView } from "react-native";
 import Post from "../Components/Post";
 import { API_URL } from "@env";
 import BottomBar from "../Components/BottomBar";
+import { useSelector } from "react-redux";
 
 export default function Home({ navigation }) {
+  const state = useSelector((state) => state);
   const [Posts, setPosts] = useState([]);
   useEffect(() => {
     axios.get(API_URL + "/post").then((res) => {

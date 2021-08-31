@@ -44,7 +44,7 @@ export default function BottomBar({ navigation }) {
                 fontWeight: "bold",
               }}
             >
-              Reclamation
+              Claims
             </Text>
           </TouchableOpacity>
 

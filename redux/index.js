@@ -3,8 +3,10 @@ import { createStore } from "redux";
 const initialState = {
   user: null,
   isLoading: true,
+  i: 0,
 };
 
+//déclaration du reducer
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case "LOGGED": {
@@ -14,11 +16,12 @@ const reducer = (state = initialState, action) => {
       return { ...state, user: null, isLoading: false };
     }
     case "LOGOUT": {
-      return { user: null };
+      return { ...state, user: null };
     }
+
     default:
       return state;
   }
 };
 
-export const store = createStore(reducer);
+export const store = createStore(reducer); //creation du store

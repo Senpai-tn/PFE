@@ -22,7 +22,7 @@ export default function Login({ navigation }) {
   const [Password, setPassword] = useState("");
   const [PasswordError, setPasswordError] = useState(false);
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); //hooks
   async function StoreUser(user) {
     try {
       await AsyncStorage.setItem("@user", JSON.stringify(user));
@@ -64,9 +64,6 @@ export default function Login({ navigation }) {
       });
   }
   useEffect(() => {
-    console.log(state);
-    //dispatch({ type: "LOGIN" });
-    console.log(state);
     return () => {};
   }, []);
   return (
