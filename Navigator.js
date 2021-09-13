@@ -21,34 +21,14 @@ import Notif from "./Screens/Notif";
 import EditProfile from "./Screens/EditProfile";
 import Navbar from "./Components/Navbar";
 import Claims from "./Screens/Claims";
-
-function HomeScreen({ navigation }) {
-  const state = useSelector((state) => state);
-  const dispatch = useDispatch();
-  async function removeValue() {
-    try {
-      await AsyncStorage.removeItem("@user");
-    } catch (e) {
-      // remove error
-    }
-  }
-
-  return (
-    <View style={{}}>
-      <Navbar navigation={navigation} />
-      <Text>Home Screen {state.user.roles.length}</Text>
-
-      <TouchableOpacity
-        onPress={() => {
-          removeValue();
-          dispatch({ type: "NOT_LOGGED" });
-        }}
-      >
-        <Icon name="logout" />
-      </TouchableOpacity>
-    </View>
-  );
-}
+import PostInfo from "./Screens/PostInfo";
+import AddClaim from "./Screens/AddClaim";
+import AddPost from "./Screens/AddPost";
+import axios from "axios";
+import { API_URL } from "@env";
+import { Users } from "./Screens/Users";
+import ListClaim from "./Screens/ListClaim";
+import ClaimInfo from "./Screens/ClaimInfo";
 
 const Stack = createNativeStackNavigator();
 
@@ -79,13 +59,18 @@ export default function Navigator() {
             headerShown: false,
           }}
         >
-          <Admin.Screen name="Admin" component={HomeScreen} />
           <Admin.Screen
             name="Posts"
             options={{ title: "Manage Users" }}
-            component={HomeScreen}
+            component={Home}
           />
+          <Admin.Screen name="Users" component={Users} />
+
           <Admin.Screen name="Profile" component={Profile} />
+          <Admin.Screen name="ListClaim" component={ListClaim} />
+          <Admin.Screen name="ClaimInfo" component={ClaimInfo} />
+          <Admin.Screen name="PostInfos" component={PostInfo} />
+          <Admin.Screen name="AddPost" component={AddPost} />
           <Admin.Screen
             options={{ tabBarStyle: { display: "none" } }}
             name="EditProfile"
@@ -114,8 +99,10 @@ export default function Navigator() {
         >
           <User.Screen name="Home" component={Home} />
           <User.Screen name="UserHome" component={Claims} />
+          <User.Screen name="AddClaim" component={AddClaim} />
           <User.Screen name="Profile" component={Profile} />
           <User.Screen name="EditProfile" component={EditProfile} />
+          <User.Screen name="PostInfos" component={PostInfo} />
         </User.Navigator>
       )}
     </NavigationContainer>

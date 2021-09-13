@@ -34,17 +34,33 @@ export default function Navbar({ navigation }) {
 
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Admin");
+              navigation.navigate("Users");
             }}
           >
             <Text
               style={{
-                color: route.name == "Admin" ? "red" : "#fff",
+                color: route.name == "Users" ? "red" : "#fff",
                 fontSize: 25,
                 fontWeight: "bold",
               }}
             >
               Users
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("ListClaim");
+            }}
+          >
+            <Text
+              style={{
+                color: route.name == "ListClaim" ? "red" : "#fff",
+                fontSize: 25,
+                fontWeight: "bold",
+              }}
+            >
+              Claims
             </Text>
           </TouchableOpacity>
 

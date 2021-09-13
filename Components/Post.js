@@ -7,11 +7,28 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function Post(props) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
+      {props.post.deleted_at != null ? (
+        <View
+          style={{
+            position: "absolute",
+            zIndex: 100,
+            right: 10,
+            top: 10,
+          }}
+        >
+          <Icon size={100} name={"trash"} color={"red"} />
+        </View>
+      ) : null}
+      <TouchableOpacity
+        onPress={() => {
+          props.navigation.navigate("PostInfos", { post: props.post });
+        }}
+      >
         <Image
           source={{
             uri: "http://server-pfe.herokuapp.com/img/" + props.post.images[0],
@@ -22,10 +39,20 @@ export default function Post(props) {
             resizeMode: "contain",
           }}
         />
-        <Text style={{ textAlign: "center", fontSize: 35, fontWeight: "bold" }}>
+        <Text
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          style={{
+            fontSize: 35,
+            fontWeight: "bold",
+            color: "black",
+          }}
+        >
           {props.post.title}
         </Text>
-        <Text>{props.post.description}</Text>
+        <Text numberOfLines={1} ellipsizeMode="tail" style={{ fontSize: 16 }}>
+          {props.post.description}
+        </Text>
       </TouchableOpacity>
     </View>
   );

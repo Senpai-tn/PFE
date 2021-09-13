@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   View,
   Text,
@@ -22,6 +22,9 @@ export default function Profile({ navigation }) {
       // remove error
     }
   }
+  useEffect(() => {
+    return () => {};
+  }, []);
   return (
     <View style={{ height: "100%" }}>
       <Navbar navigation={navigation} />

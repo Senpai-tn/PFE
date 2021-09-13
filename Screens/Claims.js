@@ -42,7 +42,6 @@ export default function Claims({ navigation }) {
       .get(API_URL + "/claim/", { params: { user_id: user.id } })
       .then((res) => {
         setClaims(res.data.claim);
-        console.log(res.data);
       });
   }
 
@@ -54,6 +53,9 @@ export default function Claims({ navigation }) {
     <View style={{ height: "100%" }}>
       <View>
         <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("AddClaim");
+          }}
           style={{
             height: 50,
             width: "35%",
@@ -147,11 +149,11 @@ export default function Claims({ navigation }) {
                     </Text>
                     <Text>
                       {claim.state != "sent"
-                        ? new Date(claim.created_at).getFullYear() +
+                        ? new Date(claim.updated_at).getFullYear() +
                           "/" +
-                          (new Date(claim.created_at).getMonth() + 1) +
+                          (new Date(claim.updated_at).getMonth() + 1) +
                           "/" +
-                          new Date(claim.created_at).getDate()
+                          new Date(claim.updated_at).getDate()
                         : null}
                     </Text>
                   </View>
@@ -169,14 +171,13 @@ export default function Claims({ navigation }) {
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
           setModalVisible(!modalVisible);
         }}
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Are you sure ? </Text>
-            <Text style={styles.modalText}> Cancel {claim.description} ?</Text>
+            <Text style={styles.modalText}>Cancel {claim.description} ?</Text>
+            <Text style={styles.modalText}>Are you sure ?</Text>
             <View
               style={{
                 display: "flex",
