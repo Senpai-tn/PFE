@@ -120,6 +120,7 @@ export default function EditProfile({ navigation }) {
               onChangeText={(e) => {
                 setPassword(e);
               }}
+              secureTextEntry={true}
               placeholder="new Password"
               leftIcon={<Icon name="lock" size={30} color="#1CC5DC" />}
             />

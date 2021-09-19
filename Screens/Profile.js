@@ -12,9 +12,11 @@ import Ionicons from "react-native-vector-icons/FontAwesome";
 import EditProfile from "./EditProfile";
 import Navbar from "../Components/Navbar";
 import BottomBar from "../Components/BottomBar";
+import { useRoute } from "@react-navigation/core";
 export default function Profile({ navigation }) {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
+  const route = useRoute();
   async function removeValue() {
     try {
       await AsyncStorage.removeItem("@user");
@@ -61,6 +63,24 @@ export default function Profile({ navigation }) {
             <Ionicons name="pencil" color="orange" size={30} /> Edit profile
           </Text>
         </TouchableOpacity>
+        {state.user.roles.includes("ADMIN") ? (
+          <TouchableOpacity
+            style={(styles.update, { marginTop: 80 })}
+            onPress={() => {
+              navigation.navigate("ListRoles");
+            }}
+          >
+            <Text
+              style={{
+                color: "#365",
+                fontSize: 25,
+                fontWeight: "bold",
+              }}
+            >
+              Manage Roles
+            </Text>
+          </TouchableOpacity>
+        ) : null}
         <TouchableOpacity
           style={styles.logout}
           onPress={() => {
@@ -73,6 +93,7 @@ export default function Profile({ navigation }) {
           </Text>
         </TouchableOpacity>
       </View>
+
       <View style={{ position: "absolute", bottom: 0 }}>
         <BottomBar navigation={navigation} />
       </View>

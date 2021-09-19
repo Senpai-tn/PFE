@@ -29,6 +29,7 @@ import { API_URL } from "@env";
 import { Users } from "./Screens/Users";
 import ListClaim from "./Screens/ListClaim";
 import ClaimInfo from "./Screens/ClaimInfo";
+import ListRoles from "./Screens/ListRoles";
 
 const Stack = createNativeStackNavigator();
 
@@ -53,7 +54,9 @@ export default function Navigator() {
           <Auth.Screen name="Login" component={Login} />
           <Auth.Screen name="Register" component={Register} />
         </Auth.Navigator>
-      ) : state.user.roles.includes("ADMIN") ? (
+      ) : state.user.roles.includes("ADMIN") ||
+        state.user.roles.includes("POST_MANAGER") ||
+        state.user.roles.includes("CLAIM_MANAGER") ? (
         <Admin.Navigator
           screenOptions={{
             headerShown: false,
@@ -71,6 +74,8 @@ export default function Navigator() {
           <Admin.Screen name="ClaimInfo" component={ClaimInfo} />
           <Admin.Screen name="PostInfos" component={PostInfo} />
           <Admin.Screen name="AddPost" component={AddPost} />
+          <Admin.Screen name="AddClaim" component={AddClaim} />
+          <Admin.Screen name="ListRoles" component={ListRoles} />
           <Admin.Screen
             options={{ tabBarStyle: { display: "none" } }}
             name="EditProfile"

@@ -75,85 +75,101 @@ export default function ClaimInfo({ route, navigation }) {
             }
           })}
         </ScrollView>
-        <View style={styles.container}>
-          <MapView
-            style={styles.map}
-            onLongPress={(e) => {
-              console.log(e.nativeEvent.coordinate);
-            }}
-            initialRegion={{
-              latitude: 36.73978607848884,
-              longitude: 10.233539678156376,
-              latitudeDelta: 0.00422,
-              longitudeDelta: 0.00421,
-            }}
-          >
-            <Marker
-              coordinate={{
-                longitude: 10.233539678156376,
-                latitude: 36.73978607848884,
+        {route.params.claim.coord.latitude != null &&
+        route.params.claim.coord.longitude != null ? (
+          <View style={styles.container}>
+            <MapView
+              style={styles.map}
+              onLongPress={(e) => {
+                console.log(e.nativeEvent.coordinate);
               }}
-            ></Marker>
-          </MapView>
-        </View>
-        <View
-          style={{
-            height: 200,
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-around",
-            alignItems: "center",
-            borderRadius: 30,
-            marginBottom: 100,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              UpdateClaim("refused");
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: "red",
-                height: 60,
-                width: 180,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 30,
+              initialRegion={{
+                latitude: parseFloat(route.params.claim.coord.latitude),
+                longitude: parseFloat(route.params.claim.coord.longitude),
+                latitudeDelta: 0.00422,
+                longitudeDelta: 0.00421,
               }}
             >
-              <Text
-                style={{ fontSize: 25, fontWeight: "bold", color: "white" }}
-              >
-                Refuse
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              UpdateClaim("accepted");
+              <Marker
+                coordinate={{
+                  latitude: parseFloat(route.params.claim.coord.latitude),
+                  longitude: parseFloat(route.params.claim.coord.longitude),
+                }}
+              ></Marker>
+            </MapView>
+          </View>
+        ) : null}
+        {route.params.claim.state == "sent" ? (
+          <View
+            style={{
+              height: 200,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-around",
+              alignItems: "center",
+              borderRadius: 30,
+              marginBottom: 100,
             }}
           >
-            <View
-              style={{
-                backgroundColor: "green",
-                height: 60,
-                width: 180,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                borderRadius: 30,
+            <TouchableOpacity
+              onPress={() => {
+                UpdateClaim("refused");
               }}
             >
-              <Text
-                style={{ fontSize: 25, fontWeight: "bold", color: "white" }}
+              <View
+                style={{
+                  backgroundColor: "red",
+                  height: 60,
+                  width: 180,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 30,
+                }}
               >
-                Accept
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+                <Text
+                  style={{ fontSize: 25, fontWeight: "bold", color: "white" }}
+                >
+                  Refuse
+                </Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                UpdateClaim("accepted");
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: "green",
+                  height: 60,
+                  width: 180,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderRadius: 30,
+                }}
+              >
+                <Text
+                  style={{ fontSize: 25, fontWeight: "bold", color: "white" }}
+                >
+                  Accept
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <Text
+            style={{
+              textAlign: "center",
+              fontSize: 25,
+              fontWeight: "bold",
+              marginTop: 40,
+            }}
+          >
+            {route.params.claim.state}
+          </Text>
+        )}
       </ScrollView>
     </View>
   );

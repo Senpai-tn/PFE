@@ -27,7 +27,7 @@ export default function Home({ navigation }) {
   return (
     <View style={{ height: "100%" }}>
       <Navbar navigation={navigation} />
-      {user.roles.includes("ADMIN") ? (
+      {user.roles.includes("ADMIN") || user.roles.includes("POST_MANAGER") ? (
         <View>
           <TouchableOpacity
             onPress={() => {
@@ -57,7 +57,10 @@ export default function Home({ navigation }) {
         {Posts.map((post, key) => {
           if (post.deleted_at == null && !user.roles.includes("ADMIN")) {
             return <Post key={key} post={post} navigation={navigation} />;
-          } else if (user.roles.includes("ADMIN")) {
+          } else if (
+            user.roles.includes("ADMIN") ||
+            user.roles.includes("POST_MANAGER")
+          ) {
             return <Post key={key} post={post} navigation={navigation} />;
           }
         })}

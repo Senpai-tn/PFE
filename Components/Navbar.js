@@ -14,7 +14,9 @@ export default function Navbar({ navigation }) {
   const user = useSelector((state) => state.user);
   return (
     <View>
-      {user.roles.includes("ADMIN") ? (
+      {user.roles.includes("ADMIN") ||
+      user.roles.includes("POST_MANAGER") ||
+      user.roles.includes("CLAIM_MANAGER") ? (
         <View style={styles.container}>
           <TouchableOpacity
             onPress={() => {
@@ -32,37 +34,42 @@ export default function Navbar({ navigation }) {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Users");
-            }}
-          >
-            <Text
-              style={{
-                color: route.name == "Users" ? "red" : "#fff",
-                fontSize: 25,
-                fontWeight: "bold",
+          {user.roles.includes("ADMIN") ? (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Users");
               }}
             >
-              Users
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  color: route.name == "Users" ? "red" : "#fff",
+                  fontSize: 25,
+                  fontWeight: "bold",
+                }}
+              >
+                Users
+              </Text>
+            </TouchableOpacity>
+          ) : null}
 
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("ListClaim");
-            }}
-          >
-            <Text
-              style={{
-                color: route.name == "ListClaim" ? "red" : "#fff",
-                fontSize: 25,
-                fontWeight: "bold",
+          {user.roles.includes("ADMIN") ||
+          user.roles.includes("CLAIM_MANAGER") ? (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("ListClaim");
               }}
             >
-              Claims
-            </Text>
-          </TouchableOpacity>
+              <Text
+                style={{
+                  color: route.name == "ListClaim" ? "red" : "#fff",
+                  fontSize: 25,
+                  fontWeight: "bold",
+                }}
+              >
+                Claims
+              </Text>
+            </TouchableOpacity>
+          ) : null}
 
           <TouchableOpacity
             onPress={() => {

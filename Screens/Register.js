@@ -27,19 +27,33 @@ export default function Register({ navigation }) {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [Login, setLogin] = useState("");
   const [Password, setPassword] = useState("");
+  const [PasswordError, setPasswordError] = useState("");
   const [FirstName, setFirstName] = useState("");
+  const [FirstNameError, setFirstNameError] = useState("");
   const [LastName, setLastName] = useState("");
+  const [LastNameError, setLastNameError] = useState("");
   const [Email, setEmail] = useState("");
+  const [EmailError, setEmailError] = useState("");
   const [Tel, setTel] = useState("");
+  const [TelError, setTelError] = useState(false);
   const [Adress, setAdress] = useState("");
-  const [LoginError, setLoginError] = useState(false);
+  const [AdressError, setAdressError] = useState("");
+  const [LoginError, setLoginError] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
     registerForPushNotificationsAsync().then((token) => {
       setExpoPushToken(token);
-      console.log(expoPushToken);
     });
   });
+
+  function onTextChanged(e) {
+    if (/^\d+$/.test(e.toString())) {
+      setTel(e);
+      setTelError("");
+    } else {
+      setTelError("Not Valid number of mobile");
+    }
+  }
 
   async function registerForPushNotificationsAsync() {
     let token;
@@ -56,7 +70,6 @@ export default function Register({ navigation }) {
         return;
       }
       token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
     } else {
       alert("Must use physical device for Push Notifications");
     }
@@ -79,6 +92,54 @@ export default function Register({ navigation }) {
     }
   }
   const RegisterAction = () => {
+    if (FirstName.trim() == "") {
+      setFirstNameError("required");
+      return;
+    } else {
+      setFirstNameError("");
+    }
+
+    if (LastName.trim() == "") {
+      setLastNameError("required");
+      return;
+    } else {
+      setLastNameError("");
+    }
+    if (Login.trim() == "") {
+      setLoginError("required");
+      return;
+    } else {
+      setLoginError("");
+    }
+    if (Tel.trim() == "") {
+      setTelError("required");
+      return;
+    } else {
+      setTelError("");
+    }
+    if (Adress.trim() == "") {
+      setAdressError("required");
+      return;
+    } else {
+      setAdressError("");
+    }
+    if (Email.trim() == "") {
+      setEmailError("required");
+      return;
+    } else {
+      setEmailError("");
+    }
+    if (Password.trim() == "") {
+      setPasswordError("required");
+      return;
+    } else {
+      setPasswordError("");
+    }
+
+    if (TelError) {
+      alert("Please valid your number of mobile");
+      return;
+    }
     axios
       .post(API_URL + "/register", {
         firstName: FirstName,
@@ -92,7 +153,7 @@ export default function Register({ navigation }) {
       })
       .then((res) => {
         if (res.data.message == "exist") {
-          setLoginError(true);
+          setLoginError("Login exist");
         } else if (res.data.message == "success") {
           StoreUser(res.data.user);
           dispatch({ type: "LOGGED", user: res.data.user });
@@ -115,6 +176,16 @@ export default function Register({ navigation }) {
               placeholder={"First Name"}
               leftIcon={<Icon name="vcard" size={30} color="#1CC5DC" />}
             />
+            <Text
+              style={{
+                color: "#f00",
+                textAlign: "left",
+                fontSize: 15,
+                marginTop: -20,
+              }}
+            >
+              {FirstNameError}
+            </Text>
             <Input
               onChangeText={(e) => {
                 setLastName(e);
@@ -122,6 +193,16 @@ export default function Register({ navigation }) {
               placeholder="Last Name"
               leftIcon={<Icon name="vcard" size={30} color="#1CC5DC" />}
             />
+            <Text
+              style={{
+                color: "#f00",
+                textAlign: "left",
+                fontSize: 15,
+                marginTop: -20,
+              }}
+            >
+              {LastNameError}
+            </Text>
             <Input
               onChangeText={(e) => {
                 setLogin(e);
@@ -129,25 +210,36 @@ export default function Register({ navigation }) {
               placeholder="Login"
               leftIcon={<Icon name="user" size={30} color="#1CC5DC" />}
             />
-            {LoginError ? (
-              <Text
-                style={{
-                  color: "#f00",
-                  textAlign: "left",
-                  fontSize: 15,
-                  marginTop: -20,
-                }}
-              >
-                Login exist
-              </Text>
-            ) : null}
-            <Input
-              onChangeText={(e) => {
-                setTel(e);
+
+            <Text
+              style={{
+                color: "#f00",
+                textAlign: "left",
+                fontSize: 15,
+                marginTop: -20,
               }}
+            >
+              {LoginError}
+            </Text>
+
+            <Input
+              keyboardType="number-pad"
+              onChangeText={(e) => onTextChanged(e)}
               placeholder="Tel"
               leftIcon={<Icon name="phone" size={30} color="#1CC5DC" />}
             />
+
+            <Text
+              style={{
+                color: "#f00",
+                textAlign: "left",
+                fontSize: 15,
+                marginTop: -20,
+              }}
+            >
+              {TelError}
+            </Text>
+
             <Input
               onChangeText={(e) => {
                 setAdress(e);
@@ -155,13 +247,17 @@ export default function Register({ navigation }) {
               placeholder="Adress"
               leftIcon={<Icon name="map" size={30} color="#1CC5DC" />}
             />
-            <Input
-              onChangeText={(e) => {
-                setPassword(e);
+            <Text
+              style={{
+                color: "#f00",
+                textAlign: "left",
+                fontSize: 15,
+                marginTop: -20,
               }}
-              placeholder="Password"
-              leftIcon={<Icon name="lock" size={30} color="#1CC5DC" />}
-            />
+            >
+              {AdressError}
+            </Text>
+
             <Input
               onChangeText={(e) => {
                 setEmail(e);
@@ -169,6 +265,34 @@ export default function Register({ navigation }) {
               placeholder="Email"
               leftIcon={<Icon name="envelope" size={30} color="#1CC5DC" />}
             />
+            <Text
+              style={{
+                color: "#f00",
+                textAlign: "left",
+                fontSize: 15,
+                marginTop: -20,
+              }}
+            >
+              {EmailError}
+            </Text>
+            <Input
+              secureTextEntry={true}
+              onChangeText={(e) => {
+                setPassword(e);
+              }}
+              placeholder="Password"
+              leftIcon={<Icon name="lock" size={30} color="#1CC5DC" />}
+            />
+            <Text
+              style={{
+                color: "#f00",
+                textAlign: "left",
+                fontSize: 15,
+                marginTop: -20,
+              }}
+            >
+              {PasswordError}
+            </Text>
           </View>
 
           <TouchableOpacity

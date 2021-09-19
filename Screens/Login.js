@@ -57,7 +57,6 @@ export default function Login({ navigation }) {
           StoreUser(res.data.user);
           dispatch({ type: "LOGGED", user: res.data.user });
         }
-        console.log(res.data);
       })
       .catch((e) => {
         console.log(e.message);

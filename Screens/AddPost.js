@@ -22,6 +22,7 @@ export default function AddPost({ navigation, route }) {
   const [Description, setDescription] = useState(DescriptionValue);
   const [image, setImage] = useState(null);
   const [images, setImages] = useState([]);
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     (async () => {
@@ -63,20 +64,21 @@ export default function AddPost({ navigation, route }) {
 
       formData.append("title", Title);
       formData.append("Description", Description);
+      formData.append("user_id", user.id);
     }
 
     if (action == "add") {
       axios
         .post(API_URL + "/post/", formData)
         .then((res) => {
-          console.log(res.data);
           if (res.data.message == "success") {
             navigation.navigate("Posts");
           } else {
+            alert("");
           }
         })
         .catch((e) => {
-          console.log(e.message);
+          navigation.navigate("Posts");
         });
     } else if (action == "update") {
       axios
@@ -101,7 +103,7 @@ export default function AddPost({ navigation, route }) {
     <View>
       <Navbar navigation={navigation} />
       <Text style={{ textAlign: "center", fontSize: 26, marginVertical: 30 }}>
-        Add Post
+        {action == "add" ? "Add post" : "Update post"}
       </Text>
       <View style={{ marginHorizontal: "10%" }}>
         <Input
@@ -123,14 +125,25 @@ export default function AddPost({ navigation, route }) {
         <View
           style={{
             display: "flex",
-            flexDirection: "row",
+            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-
+            top: 50,
             height: 50,
             width: "100%",
           }}
         >
+          {action == "add" ? (
+            <>
+              <TouchableOpacity onPress={pickImage}>
+                <View>
+                  <Text>Pick image</Text>
+                </View>
+              </TouchableOpacity>
+
+              <Text>{images.length} images selected</Text>
+            </>
+          ) : null}
           <TouchableOpacity
             onPress={() => {
               UploadAction();
@@ -141,7 +154,7 @@ export default function AddPost({ navigation, route }) {
               justifyContent: "center",
               alignItems: "center",
               marginTop: 30,
-              backgroundColor: "orange",
+              backgroundColor: action == "add" ? "green" : "orange",
               height: 50,
               width: 150,
             }}
@@ -153,7 +166,7 @@ export default function AddPost({ navigation, route }) {
                 color: "white",
               }}
             >
-              Update
+              {action == "add" ? "Add" : "Update"}
             </Text>
           </TouchableOpacity>
         </View>

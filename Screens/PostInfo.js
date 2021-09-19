@@ -113,7 +113,7 @@ export default function PostInfo({ route, navigation }) {
             {route.params.post.description}
           </Text>
         </View>
-        {user.roles.includes("ADMIN") ? (
+        {user.roles.includes("ADMIN") || user.roles.includes("POST_MANAGER") ? (
           <View
             style={{
               height: 100,

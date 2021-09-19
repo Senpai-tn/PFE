@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -10,10 +10,14 @@ import {
 import { API_URL } from "@env";
 import axios from "axios";
 import Icon from "react-native-vector-icons/FontAwesome";
+import SelectDropdown from "react-native-select-dropdown";
+import { useSelector } from "react-redux";
 
 export default function User(props) {
   const [modalVisible, setModalVisible] = useState(false);
   const [User, setUser] = useState(props.user);
+  const [Roles, setRoles] = useState([]);
+  const Admin = useSelector((state) => state.user);
 
   const BlockUser = () => {
     axios.delete(API_URL + "/delete", { data: { id: User.id } }).then((res) => {
@@ -22,32 +26,50 @@ export default function User(props) {
       console.log(res.data);
     });
   };
-  const SetRole = () => {
-    var action = "";
-    if (User.roles.includes("ADMIN")) {
-      action = "remove";
-    } else {
-      action = "add";
-    }
+
+  const getRoles = () => {
+    axios
+      .get(API_URL + "/role/", { params: { deleted: "false" } })
+      .then((res) => {
+        let filteredArray = res.data.roles.filter(
+          (item) => item.deleted_at == null,
+        );
+        setRoles(filteredArray);
+      });
+  };
+
+  const SetRole = (role) => {
     axios
       .post(API_URL + "/setRole", {
         id: User.id,
-        type: "ADMIN",
-        action: action,
+        type: role,
       })
       .then((res) => {
         setModalVisible(false);
         setUser(res.data.user);
-      });
+      })
+      .catch((e) => console.log(e.message));
   };
+
+  useEffect(() => {
+    getRoles();
+    return () => {};
+  }, []);
 
   return (
     <TouchableOpacity
       onLongPress={() => {
-        setModalVisible(true);
+        if (Admin.id == User.id) {
+          alert("no action allowed on you");
+        } else setModalVisible(true);
       }}
       style={{
-        backgroundColor: User.roles.includes("ADMIN") ? "green" : "grey",
+        backgroundColor:
+          User.roles.includes("ADMIN") ||
+          User.roles.includes("POST_MANAGER") ||
+          User.roles.includes("CLAIM_MANAGER")
+            ? "green"
+            : "grey",
         marginVertical: 10,
       }}
     >
@@ -81,37 +103,53 @@ export default function User(props) {
           <View style={styles.modalView}>
             <Text style={styles.modalText}>Action for :</Text>
             <Text style={styles.modalText}>{User.login}</Text>
-            <View
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-between",
-                width: 250,
-              }}
-            >
-              {User.deleted_at == null ? (
-                <>
-                  <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => {
-                      BlockUser();
+
+            {User.deleted_at == null && !User.roles.includes("ADMIN") ? (
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  width: 250,
+                  height: 150,
+                }}
+              >
+                <Pressable
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => {
+                    BlockUser();
+                  }}
+                >
+                  <Text style={styles.textStyle}>Block</Text>
+                </Pressable>
+
+                <View
+                  style={[
+                    styles.button,
+                    {
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    },
+                  ]}
+                >
+                  <Text style={styles.textStyle}>Set Role to : </Text>
+                  <SelectDropdown
+                    data={Roles}
+                    onSelect={(selectedItem, index) => {
+                      console.log(selectedItem);
+                      SetRole(selectedItem.type);
                     }}
-                  >
-                    <Text style={styles.textStyle}>Block</Text>
-                  </Pressable>
-                  <Pressable
-                    style={styles.button}
-                    onPress={() => {
-                      SetRole();
+                    buttonTextAfterSelection={(selectedItem, index) => {
+                      return selectedItem.type;
                     }}
-                  >
-                    <Text style={styles.textStyle}>
-                      {User.roles.includes("ADMIN") ? "Dispromote" : "Promote"}
-                    </Text>
-                  </Pressable>
-                </>
-              ) : null}
-            </View>
+                    rowTextForSelection={(item, index) => {
+                      return item.type;
+                    }}
+                  />
+                </View>
+              </View>
+            ) : null}
           </View>
         </View>
       </Modal>

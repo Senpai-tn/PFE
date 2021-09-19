@@ -32,11 +32,27 @@ export default function Claim(props) {
         props.navigation.navigate("ClaimInfo", { claim: props.claim });
       }}
       onLongPress={() => {
-        setModalVisible(true);
+        if (props.claim.state == "sent") setModalVisible(true);
+        else alert("this claim was " + props.claim.state);
       }}
     >
       <View style={{ marginVertical: 25 }}>
-        <Text style={{ fontSize: 25 }}>{props.claim.description}</Text>
+        <Text style={{ fontSize: 25, fontWeight: "bold" }}>
+          {props.claim.description}
+        </Text>
+        <View
+          style={{
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "flex-start",
+            flexDirection: "row",
+          }}
+        >
+          <Text style={{ fontSize: 20 }}>From : </Text>
+          <Text style={{ fontSize: 25, fontWeight: "bold" }}>
+            {props.claim.user.login}
+          </Text>
+        </View>
         <Image
           source={{ uri: API_URL + "/img/" + props.claim.images[0] }}
           style={{ height: 150 }}
